@@ -3,10 +3,15 @@
 # For Ubuntu 24.04 LTS
 
 # Ensure we're running as root
-if [ ! $(id -u) = 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
   echo "This script must be run as root. Use sudo." 
   exit 1
 fi
+
+# if [ ! $(id -u) = 0 ]; then
+#   echo "This script must be run as root. Use sudo." 
+#   exit 1
+# fi
 
 # If depoly.env exists, load it.
 if [ -e "deploy.env" ]; then
@@ -68,12 +73,12 @@ echo "What type of server do you want to install?"
 echo "1) Control-Plane Node"
 echo "2) Worker Node"
 echo ""
-IS_MANAGER_NODE=false
+IS_MANAGER_NODE=0
 while true; do
     read -p "Option (1/2): " option
     case $option in
-        1 ) IS_MANAGER_NODE=true; break ;;
-        2 ) IS_MANAGER_NODE=false; break ;;
+        1 ) IS_MANAGER_NODE=1; break ;;
+        2 ) IS_MANAGER_NODE=0; break ;;
         * ) echo "Invalid input, try again." && exit 1 ;;
     esac
 done
@@ -102,11 +107,15 @@ echo "Setting system hostname and timezone..."
 hostnamectl set-hostname "$HOSTNAME"
 timedatectl set-timezone Europe/London
 
+# Add cron job to reboot at 6:00 AM
+echo "Adding auto reboot cronjob"
+(crontab -l 2>/dev/null; echo "0 6 * * * /sbin/reboot") | crontab -
+
 # Install and configure Tailscale
 echo "Installing Tailscale..."
 curl -fsSL https://tailscale.com/install.sh | bash
 
-if $IS_MANAGER_NODE; then
+if [ "$IS_MANAGER_NODE" -eq 1 ]; then
   tailscale up --accept-risk=all --advertise-tags=tag:k8s-control-plane
 else
   tailscale up --accept-risk=all --advertise-tags=tag:k8s-worker
@@ -132,10 +141,6 @@ ufw --force enable
 echo "Enabling services..."
 systemctl enable fail2ban --now
 
-
-# Add cron job to reboot at 6:00 AM
-(crontab -l 2>/dev/null; echo "0 6 * * * /sbin/reboot") | crontab -
-
 # Install microk8s
 sudo snap install microk8s --classic
 microk8s status --wait-ready
@@ -145,78 +150,72 @@ echo "alias kubectl='microk8s kubectl'" > ~/.bashrc
 echo "alias helm='microk8s helm'" > ~/.bashrc
 
 # Setup server specfic options
-if $IS_MANAGER_NODE; then
-  # microk8s disable ha-cluster --force
-  # microk8s enable hostpath-storage
-  # microk8s enable rook-ceph
-  # microk8s enable minio -c 300Gi -s ceph-xfs
+if [ "$IS_MANAGER_NODE" -eq 1 ]; then
   microk8s enable dashboard
   microk8s enable cert-manager
-  microk8s enable dns:100.100.100.100 # Tailscale DNS IP
+  microk8s enable dns:100.100.100.100
   microk8s enable registry
   microk8s enable rbac
   microk8s enable istio
   microk8s enable metallb:"$(tailscale ip -4)"
   microk8s enable helm
 
-  # microk8s kubectl -n minio-operator get svc minio
-
   microk8s kubectl get all --all-namespaces
   microk8s dashboard-proxy
 
-  echo "
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: hcloud
-      namespace: kube-system
-    stringData:
-      token: "$HETZNER_S3_TOKEN"
-  " >> ./depoly_tmp/hetzner_secrets.yml
+  # Write Hetzner secret
+  cat <<EOF > ./deploy_tmp/hetzner_secrets.yml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: hcloud
+  namespace: kube-system
+stringData:
+  token: $HETZNER_S3_TOKEN
+EOF
 
-  microk8s kubectl apply -f ./depoly_tmp/hetzner_secrets.yml
-  rm ./depoly_tmp/hetzner_secrets.yml
-
+  microk8s kubectl apply -f ./deploy_tmp/hetzner_secrets.yml
+  rm ./deploy_tmp/hetzner_secrets.yml
 
   microk8s helm repo add hcloud https://charts.hetzner.cloud
   microk8s helm repo update hcloud
   microk8s helm install hcloud-csi hcloud/hcloud-csi -n kube-system
 
-  echo "
-    kind: StorageClass
-    apiVersion: storage.k8s.io/v1
-    metadata:
-      name: hcloud-volumes
-      annotations:
-        storageclass.kubernetes.io/is-default-class: "true"
-    provisioner: csi.hetzner.cloud
-    volumeBindingMode: WaitForFirstConsumer
-    allowVolumeExpansion: true
-    reclaimPolicy: Retain
-    ---
-    apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      name: hetzner-pvc
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 500Gi
-      storageClassName: hcloud-volumes
-  " >> ./depoly_tmp/hetzner_pvc.yml
+  # Write StorageClass and PVC
+  cat <<EOF > ./deploy_tmp/hetzner_pvc.yml
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: hcloud-volumes
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: csi.hetzner.cloud
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hetzner-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: hcloud-volumes
+EOF
 
-  # Apply ingree controller
-  echo "Adding Contour (Ingree Controller)"
+  # Apply ingress controller
+  echo "Adding Contour (Ingress Controller)"
   microk8s kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 
-  # Depoly Portainer (Port 9443)
+  # Deploy Portainer
   echo "Adding Portainer"
   microk8s helm repo add portainer https://portainer.github.io/k8s/
   microk8s helm repo update
 
-  # Web Interface is 8001
   microk8s helm upgrade --install --create-namespace -n portainer portainer portainer/portainer \
     --set service.type=LoadBalancer \
     --set tls.force=true \
@@ -224,7 +223,7 @@ if $IS_MANAGER_NODE; then
     --set service.httpNodePort=8001 \
     --set persistence.storageClass=hcloud-volumes
 else
-  
+  echo "Your worker is setup"
 fi
 
 # Cleanup and reboot
