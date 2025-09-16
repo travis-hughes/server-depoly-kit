@@ -44,10 +44,20 @@ EOF
 echo "Ensuring 'admin-user' exists for dashboard..."
 cat <<EOF | microk8s kubectl apply -f -
 apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: admin-user-secret
+  annotations:
+    kubernetes.io/service-account.name: admin-user
+---
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: admin-user
   namespace: kube-system
+secrets:
+  - name: admin-user-secret
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -72,6 +82,7 @@ if [ -z "$SECRET_NAME" ]; then
 fi
 
 microk8s kubectl -n kube-system describe secret "$SECRET_NAME" | grep 'token:'
+
 
 # Setup Hetzner S3
 # Write Hetzner secret
@@ -117,9 +128,11 @@ spec:
 EOF
 microk8s kubectl apply -f ./hetzner_pvc.yml
 
+
 # Apply ingress controller
 echo "Adding Contour (Ingress Controller)"
 microk8s kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
+
 
 # Deploy Portainer
 echo "Adding Portainer"
