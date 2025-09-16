@@ -25,12 +25,16 @@ fi
 wget -q -P ./deploy_tmp https://k8s-deploy.ap-host.net/files.txt
 wget -q -P ./deploy_tmp -i ./deploy_tmp/files.txt -B https://k8s-deploy.ap-host.net
 
-# Load autorun Scripts
+
+# Enter tmux session to prevent script ending on SSHD disconnect
+tmux
+
+
+# Load scripts from autorun folder
 for FILE in ./deploy_tmp/*-*.sh; do
   echo "\n ▶️ Exacuting autorun script: $FILE \n"
   . $FILE
 done
-
 
 # Cleanup and reboot
 rm ./deploy_tmp
