@@ -1,0 +1,1 @@
+https://k8s-deploy.ap-host.net/control-plane.sh

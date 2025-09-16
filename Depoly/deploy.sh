@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # For Ubuntu 24.04 LTS
-
-set -euo pipefail # Exit script if command fails
+# Published URL: https://k8s-deploy.ap-host.net/deploy.sh
 
 # Ensure we're running as root
 if [ "$(id -u)" -ne 0 ]; then
@@ -10,21 +9,18 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-# if [ ! $(id -u) = 0 ]; then
-#   echo "This script must be run as root. Use sudo." 
-#   exit 1
-# fi
 
-# If depoly.env exists, load it.
+# Create Tempory Folder
+mkdir ./deploy_tmp
+
+
+# If deploy.env exists, load it.
 if [ -e "deploy.env" ]; then
   echo "Environment Variables have been detected, loading them..."
   . ./deploy.env
 fi
 
-# Create Tempory Folder
-mkdir ./depoly_tmp
 
-# Utils
 input_field()
 {
   FIELD_NAME=$1
@@ -51,6 +47,22 @@ ensure_var_defined()
 
   echo "$INPUT"
 }
+
+
+# Download dependancy files
+wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/deps.txt
+while IFS= read -r line
+do
+  wget -P ./deploy_tmp/"$line"
+done < "./deploy_tmp/deps.txt"
+
+# Load all include scripts
+# for file in ./deploy_tmp/*.inc.sh; do
+#   # Skip if not a file
+#   [ -f "$file" ] || continue
+#   . $file
+# done
+
 
 echo "======================================================================================================"
 echo "Configure your host system"
@@ -123,12 +135,6 @@ else
   tailscale up --accept-risk=all --advertise-tags=tag:k8s-worker
 fi
 
-
-echo "======================================================================================================"
-echo "Setting up your software. No more input is required. Sit back and watch..."
-echo "======================================================================================================"
-
-
 # Update packages and install required software
 echo "Updating system and installing necessary packages..."
 apt update && apt upgrade -y
@@ -143,6 +149,8 @@ ufw --force enable
 echo "Enabling services..."
 systemctl enable fail2ban --now
 
+
+
 # Install microk8s
 sudo snap install microk8s --classic
 microk8s status --wait-ready
@@ -153,124 +161,13 @@ echo "alias helm='microk8s helm'" > ~/.bashrc
 
 # Setup server specfic options
 if [ "$IS_MANAGER_NODE" -eq 1 ]; then
-  wget -P ./depoly_tmp https://k8s-deploy.ap-host.net/control-plane.sh
-  . ./control-plane.sh
-#   microk8s disable dns --force
-
-#   # microk8s enable community
-#   microk8s enable dashboard
-#   microk8s enable cert-manager
-#   microk8s enable dns:100.100.100.100
-#   microk8s enable registry
-#   microk8s enable rbac
-#   microk8s enable cis-hardening
-#   microk8s enable metallb:"$(tailscale ip -4)"
-
-#   microk8s kubectl get all --all-namespaces
-
-#   TAILSCALE_IP=$(tailscale ip -4 | head -n1)
-
-#   # Expose dashboard with Loadbalencer and not dashboard-proxy (meant for local development)
-#   cat <<EOF | microk8s kubectl apply -f -
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: kubernetes-dashboard-lb
-#   namespace: kube-system
-# spec:
-#   type: LoadBalancer
-#   externalIPs:
-#   - $TAILSCALE_IP
-#   ports:
-#   - port: 9901
-#     targetPort: 443
-#     protocol: TCP
-#     name: https
-#   selector:
-#     k8s-app: kubernetes-dashboard
-# EOF
-
-#   echo "Waiting for dashboard to be available at https://$TAILSCALE_IP:9901 ..."
-#   for i in {1..10}; do
-#     sleep 3
-#     if nc -zv "$TAILSCALE_IP" 9901 &>/dev/null; then
-#       echo "✅ Dashboard is now accessible at: https://$TAILSCALE_IP:9901"
-#       break
-#     else
-#       echo "Still waiting..."
-#     fi
-#   done
-
-#   echo "Fetching dashboard admin token..."
-#   SECRET_NAME=$(microk8s kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
-#   microk8s kubectl -n kube-system describe secret "$SECRET_NAME" | grep 'token:'
-
-#   # Setup Hetzner S3
-#   # Write Hetzner secret
-#   cat <<EOF > ./deploy_tmp/hetzner_secrets.yml
-# apiVersion: v1
-# kind: Secret
-# metadata:
-#   name: hcloud
-#   namespace: kube-system
-# stringData:
-#   token: $HETZNER_S3_TOKEN
-# EOF
-
-#   microk8s kubectl apply -f ./deploy_tmp/hetzner_secrets.yml
-#   rm ./deploy_tmp/hetzner_secrets.yml
-
-#   # Add S3 CSI Driver
-#   microk8s helm repo add hcloud https://charts.hetzner.cloud
-#   microk8s helm repo update hcloud
-#   microk8s helm install hcloud-csi hcloud/hcloud-csi -n kube-system
-
-#   # Write StorageClass and PVC
-#   cat <<EOF > ./deploy_tmp/hetzner_pvc.yml
-# kind: StorageClass
-# apiVersion: storage.k8s.io/v1
-# metadata:
-#   name: hcloud-volumes
-#   annotations:
-#     storageclass.kubernetes.io/is-default-class: "true"
-# provisioner: csi.hetzner.cloud
-# volumeBindingMode: WaitForFirstConsumer
-# allowVolumeExpansion: true
-# reclaimPolicy: Retain
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: hetzner-pvc
-# spec:
-#   accessModes:
-#   - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 500Gi
-#   storageClassName: hcloud-volumes
-# EOF
-
-#   # Apply ingress controller
-#   echo "Adding Contour (Ingress Controller)"
-#   microk8s kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
-
-#   # Deploy Portainer
-#   echo "Adding Portainer"
-#   microk8s helm repo add portainer https://portainer.github.io/k8s/
-#   microk8s helm repo update
-
-#   microk8s helm upgrade --install --create-namespace -n portainer portainer portainer/portainer \
-#     --set service.type=LoadBalancer \
-#     --set tls.force=true \
-#     --set image.tag=lts \
-#     --set service.httpNodePort=8001 \
-#     --set persistence.storageClass=hcloud-volumes
+  # wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/control-plane.sh
+  . ./deploy_tmp/control-plane.sh
 else
   echo "Your worker is setup"
 fi
 
 # Cleanup and reboot
-rm ./depoly_tmp
+rm ./deploy_tmp
 rm deploy.env
 reboot
