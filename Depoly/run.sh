@@ -26,7 +26,7 @@ wget -q -P ./deploy_tmp https://k8s-deploy.ap-host.net/files.txt
 wget -q -P ./deploy_tmp -i ./deploy_tmp/files.txt -B https://k8s-deploy.ap-host.net
 
 
-# Enter tmux session to prevent script ending on SSHD disconnect
+# Enter tmux session to prevent script ending on SSH disconnect
 tmux
 
 
