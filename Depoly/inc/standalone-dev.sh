@@ -14,8 +14,6 @@ volumeBindingMode: WaitForFirstConsumer
 EOF
 
 microk8s enable cert-manager
-# TODO: Add letsencrypt
-
 microk8s enable rbac
 
 HOST_PUBLIC_IP=$(tailscale ip -4 | head -n1)

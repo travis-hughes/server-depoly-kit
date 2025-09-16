@@ -3,17 +3,17 @@ echo "Installing Tailscale..."
 curl -fsSL https://tailscale.com/install.sh | bash
 
 # Control Plane
-if [ "$SERVER_TEMPLATE" == 1 ]; then
+if [ "$SERVER_TEMPLATE" -eq 1 ]; then
   tailscale up --accept-risk=all --advertise-tags=tag:k8s-control-plane
 fi
 
 # Worker
-if [ "$SERVER_TEMPLATE" == 2 ]; then
+if [ "$SERVER_TEMPLATE" -eq 2 ]; then
   tailscale up --accept-risk=all --advertise-tags=tag:k8s-worker
 fi
 
 # Standalone (dev)
-if [ "$SERVER_TEMPLATE" == 3 ]; then
+if [ "$SERVER_TEMPLATE" -eq 3 ]; then
   tailscale up --accept-risk=all --advertise-tags=tag:k8s-control-plane
 fi
 
