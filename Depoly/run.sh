@@ -23,7 +23,7 @@ fi
 
 # Download dependancy files
 wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/files.txt
-wget -P ./deploy_tmp -i ./deploy_tmp/files.txt 
+wget -P ./deploy_tmp -i ./deploy_tmp/files.txt -B https://k8s-deploy.ap-host.net
 
 # wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/0-utils.sh
 # wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/1-start.sh
