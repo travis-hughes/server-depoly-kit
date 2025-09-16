@@ -25,9 +25,9 @@ fi
 wget -q -P ./deploy_tmp https://k8s-deploy.ap-host.net/files.txt
 wget -q -P ./deploy_tmp -i ./deploy_tmp/files.txt -B https://k8s-deploy.ap-host.net
 
+nohup long-running-command &
 
 # Enter tmux session to prevent script ending on SSH disconnect
-cat <<EOF | tmux new-session -d -s my_session -
 # Load scripts from autorun folder
 for FILE in ./deploy_tmp/*-*.sh; do
   echo "\n ▶️ Exacuting autorun script: $FILE \n"
@@ -38,4 +38,3 @@ done
 rm ./deploy_tmp
 rm deploy.env
 reboot
-EOF
