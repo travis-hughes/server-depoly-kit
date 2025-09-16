@@ -22,13 +22,12 @@ fi
 
 
 # Download dependancy files
-wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/files.txt
-wget -P ./deploy_tmp -i ./deploy_tmp/files.txt -B https://k8s-deploy.ap-host.net
-
+wget -q -P ./deploy_tmp https://k8s-deploy.ap-host.net/files.txt
+wget -q -P ./deploy_tmp -i ./deploy_tmp/files.txt -B https://k8s-deploy.ap-host.net
 
 # Load autorun Scripts
 for FILE in ./deploy_tmp/*-*.sh; do
-  echo "\n\n ▶️ Exacuting autorun script: $FILE \n\n"
+  echo "\n ▶️ Exacuting autorun script: $FILE \n"
   . $FILE
 done
 

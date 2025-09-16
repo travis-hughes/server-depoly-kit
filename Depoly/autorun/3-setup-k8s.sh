@@ -8,7 +8,7 @@ echo "alias helm='microk8s helm'" > ~/.bashrc
 
 # Setup server specfic options
 if [ "$IS_MANAGER_NODE" -eq 1 ]; then
-  . ./control-plane.sh
+  . ./deploy_tmp/control-plane.sh
 else
   echo "Your worker is setup"
 fi
