@@ -25,10 +25,11 @@ wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/control-plane.sh
 
 
 # Load all include scripts
-# for file in ./deploy_tmp/*.inc.sh; do
+# for FILE in ./deploy_tmp/*.inc.sh; do
 #   # Skip if not a file
-#   [ -f "$file" ] || continue
-#   . $file
+#   [ -f "$FILE" ] || continue
+
+#   . $FILE
 # done
 
 

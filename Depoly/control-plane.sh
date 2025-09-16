@@ -2,10 +2,9 @@
 
 # microk8s enable community
 microk8s enable dashboard
-microk8s enable cert-manager
+microk8s enable cert-manager:10.64.140.43-10.64.140.49,192.168.0.105-192.168.0.111
 microk8s enable registry
 microk8s enable rbac
-microk8s enable cis-hardening
 microk8s enable metallb
 
 microk8s kubectl get all --all-namespaces
@@ -41,7 +40,7 @@ spec:
     k8s-app: kubernetes-dashboard
 EOF
 
-### Ensure admin-user exists for dashboard ###
+# Ensure admin-user exists for dashboard
 echo "Ensuring 'admin-user' exists for dashboard..."
 cat <<EOF | microk8s kubectl apply -f -
 apiVersion: v1
@@ -67,7 +66,7 @@ EOF
 # Get Admin user Token
 echo "Fetching dashboard admin token..."
 SECRET_NAME=$(microk8s kubectl -n kube-system get secret | grep admin-user | awk '{print $1}' || true)
-if [[ -z "$SECRET_NAME" ]]; then
+if [ -z "$SECRET_NAME" ]; then
   echo "Admin user secret not found."
   exit 1
 fi
@@ -102,7 +101,7 @@ metadata:
 provisioner: csi.hetzner.cloud
 volumeBindingMode: WaitForFirstConsumer
 allowVolumeExpansion: true
-reclaimPolicy: Retain
+reclaimPolicy: delete
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -133,3 +132,7 @@ microk8s helm upgrade --install --create-namespace -n portainer portainer portai
     --set image.tag=lts \
     --set service.httpNodePort=9902 \
     --set persistence.storageClass=hcloud-volumes
+
+
+
+microk8s enable cis-hardening
