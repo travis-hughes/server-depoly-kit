@@ -25,15 +25,10 @@ fi
 wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/files.txt
 wget -P ./deploy_tmp -i ./deploy_tmp/files.txt -B https://k8s-deploy.ap-host.net
 
-# wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/0-utils.sh
-# wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/1-start.sh
-# wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/2-setup-host.sh
-# wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/3-setup-k8s.sh
-# wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/inc/control-plane.sh
-
 
 # Load autorun Scripts
 for FILE in ./deploy_tmp/*-*.sh; do
+  echo "\n\n ▶️ Exacuting autorun script: $FILE \n\n"
   . $FILE
 done
 
