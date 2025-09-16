@@ -31,7 +31,7 @@ echo ""
 echo "What type of server do you want to install?"
 echo "1) Control-Plane"
 echo "2) Worker"
-echo "3) Standalone"
+echo "3) Standalone (Dev)"
 echo ""
 SERVER_TEMPLATE=0
 while true; do
