@@ -13,15 +13,19 @@ passwd
 
 # Create user
 echo "\n Creating new user and setting up SSH... \n"
+
 sudo adduser --ingroup root "$USERNAME"
 sudo usermod -a -G sudo "$USERNAME"
+
 mkdir -p /home/$USERNAME/.ssh
 echo "$SSH_KEY" > /home/$USERNAME/.ssh/authorized_keys
+
 chown -R $USERNAME:sudo /home/$USERNAME/.ssh
 chmod 600 /home/$USERNAME/.ssh/authorized_keys
 
 
 echo "\n Disabling SSH password authentication... \n"
+
 rm -f /etc/ssh/sshd_config.d/*
 mkdir -p /etc/ssh/sshd_config.d
 echo "PasswordAuthentication no" > /etc/ssh/sshd_config.d/disable-password-auth.conf

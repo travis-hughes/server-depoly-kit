@@ -21,15 +21,15 @@ if [ -e "deploy.env" ]; then
 fi
 
 # Download dependancy files
-wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/0-utils.sh
-wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/1-start.sh
-wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/2-setup-host.sh
-wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/3-setup-k8s.sh
+wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/0-utils.sh
+wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/1-start.sh
+wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/2-setup-host.sh
+wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/autorun/3-setup-k8s.sh
 wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/control-plane.sh
 
 
-# Load all include scripts
-for FILE in ./deploy_tmp/*.inc.sh; do
+# Load autorun Scripts
+for FILE in ./deploy_tmp/*-*.sh; do
   . $FILE
 done
 
