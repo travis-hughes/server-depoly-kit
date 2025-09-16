@@ -1,5 +1,5 @@
-/autorun/0-utils.sh
-/autorun/1-start.sh
-/autorun/2-setup-host.sh
-/autorun/3-setup-k8s.sh
-/inc/control-plane.sh
+https://k8s-deploy.ap-host.net/autorun/0-utils.sh
+https://k8s-deploy.ap-host.net/autorun/1-start.sh
+https://k8s-deploy.ap-host.net/autorun/2-setup-host.sh
+https://k8s-deploy.ap-host.net/autorun/3-setup-k8s.sh
+https://k8s-deploy.ap-host.net/inc/control-plane.sh
