@@ -2,11 +2,21 @@
 echo "Installing Tailscale..."
 curl -fsSL https://tailscale.com/install.sh | bash
 
-if [ "$IS_MANAGER_NODE" -eq 1 ]; then
+# Control Plane
+if [ "$SERVER_TEMPLATE" == 1 ]; then
   tailscale up --accept-risk=all --advertise-tags=tag:k8s-control-plane
-else
+fi
+
+# Worker
+if [ "$SERVER_TEMPLATE" == 2 ]; then
   tailscale up --accept-risk=all --advertise-tags=tag:k8s-worker
 fi
+
+# Standalone (dev)
+if [ "$SERVER_TEMPLATE" == 3 ]; then
+  tailscale up --accept-risk=all --advertise-tags=tag:k8s-control-plane
+fi
+
 
 echo "Please set a strong new password for your root user."
 passwd
@@ -41,7 +51,7 @@ echo "Adding auto reboot cronjob"
 # Update packages and install required software
 echo "Updating system and installing necessary packages..."
 apt update && apt upgrade -y
-sudo apt-get install -y fail2ban ufw
+apt install -y fail2ban ufw
 
 # Setup UFW
 echo "Enabling UFW firewall..."

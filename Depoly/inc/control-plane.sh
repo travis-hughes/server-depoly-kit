@@ -1,11 +1,16 @@
 # DNS_UPSTREAM="100.100.100.100"
 
 # microk8s enable community
-microk8s enable dashboard
 microk8s enable cert-manager
 microk8s enable registry
 microk8s enable rbac
 microk8s enable metallb:10.64.140.43-10.64.140.49,192.168.0.105-192.168.0.111
+
+microk8s enable dashboard
+
+# Apply ingress controller
+echo "Adding Contour (Ingress Controller)"
+microk8s kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 
 microk8s kubectl get all --all-namespaces
 
@@ -127,11 +132,6 @@ spec:
   storageClassName: hcloud-volumes
 EOF
 microk8s kubectl apply -f ./hetzner_pvc.yml
-
-
-# Apply ingress controller
-echo "Adding Contour (Ingress Controller)"
-microk8s kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 
 
 # Deploy Portainer

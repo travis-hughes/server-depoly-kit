@@ -8,6 +8,7 @@ input_field()
     exit 1
   fi
 
+  echo "$OUTPUT" > deploy.env
   echo "$OUTPUT"
 }
 

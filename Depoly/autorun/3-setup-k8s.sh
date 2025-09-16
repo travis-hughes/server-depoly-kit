@@ -12,3 +12,19 @@ if [ "$IS_MANAGER_NODE" -eq 1 ]; then
 else
   echo "Your worker is setup"
 fi
+
+
+# Control Plane
+if [ "$SERVER_TEMPLATE" == 1 ]; then
+  . ./deploy_tmp/control-plane.sh
+fi
+
+# Worker
+if [ "$SERVER_TEMPLATE" == 2 ]; then
+  echo "Your worker is setup"
+fi
+
+# Standalone (dev)
+if [ "$SERVER_TEMPLATE" == 3 ]; then
+  . ./deploy_tmp/standalone-dev.sh
+fi
