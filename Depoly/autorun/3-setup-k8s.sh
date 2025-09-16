@@ -6,13 +6,6 @@ microk8s status --wait-ready
 echo "alias kubectl='microk8s kubectl'" > ~/.bashrc
 echo "alias helm='microk8s helm'" > ~/.bashrc
 
-# Setup server specfic options
-if [ "$IS_MANAGER_NODE" -eq 1 ]; then
-  . ./deploy_tmp/control-plane.sh
-else
-  echo "Your worker is setup"
-fi
-
 
 # Control Plane
 if [ "$SERVER_TEMPLATE" == 1 ]; then
