@@ -25,4 +25,7 @@ kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 microk8s enable dashboard
 microk8s enable dashboard-proxy
 
-microk8s kubectl get all --all-namespaces
+# TODO: Add these options -c 100Gi -s ceph-xfs
+microk8s enable miniio
+
+microk8s kubectl get all --all-namespaceso
