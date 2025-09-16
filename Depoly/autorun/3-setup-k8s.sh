@@ -8,7 +8,6 @@ echo "alias helm='microk8s helm'" > ~/.bashrc
 
 # Setup server specfic options
 if [ "$IS_MANAGER_NODE" -eq 1 ]; then
-  # wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/control-plane.sh
   . ./control-plane.sh
 else
   echo "Your worker is setup"

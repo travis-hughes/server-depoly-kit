@@ -1,0 +1,5 @@
+/autorun/0-utils.sh
+/autorun/1-start.sh
+/autorun/2-setup-host.sh
+/autorun/3-setup-k8s.sh
+/inc/control-plane.sh
