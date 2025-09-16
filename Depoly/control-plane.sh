@@ -134,5 +134,4 @@ microk8s helm upgrade --install --create-namespace -n portainer portainer portai
     --set persistence.storageClass=hcloud-volumes
 
 
-
 microk8s enable cis-hardening
