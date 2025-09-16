@@ -20,6 +20,17 @@ if [ -e "deploy.env" ]; then
   . ./deploy.env
 fi
 
+# Download dependancy files
+wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/control-plane.sh
+
+
+# Load all include scripts
+# for file in ./deploy_tmp/*.inc.sh; do
+#   # Skip if not a file
+#   [ -f "$file" ] || continue
+#   . $file
+# done
+
 
 input_field()
 {
@@ -47,21 +58,6 @@ ensure_var_defined()
 
   echo "$INPUT"
 }
-
-
-# Download dependancy files
-wget -P ./deploy_tmp https://k8s-deploy.ap-host.net/deps.txt
-while IFS= read -r line
-do
-  wget -P ./deploy_tmp/"$line"
-done < "./deploy_tmp/deps.txt"
-
-# Load all include scripts
-# for file in ./deploy_tmp/*.inc.sh; do
-#   # Skip if not a file
-#   [ -f "$file" ] || continue
-#   . $file
-# done
 
 
 echo "======================================================================================================"
