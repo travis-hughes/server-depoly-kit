@@ -18,9 +18,9 @@ done
 echo "Downloading Template Scripts"
 mkdir -p ./deploy_tmp/template/
 
-wget -q -P ./deploy_tmp/template/ -B https://k8s-deploy.ap-host.net templates/"$TEMPLATE"/input.sh
-wget -q -P ./deploy_tmp/template/ -B https://k8s-deploy.ap-host.net templates/"$TEMPLATE"/run.sh
-wget -q -P ./deploy_tmp/template/ -B https://k8s-deploy.ap-host.net templates/"$TEMPLATE"/files.txt
+wget -q -P ./deploy_tmp/template/ https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/input.sh
+wget -q -P ./deploy_tmp/template/ https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/run.sh
+wget -q -P ./deploy_tmp/template/ https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/files.txt
 
 
 if [ -e "./deploy_tmp/template/files.txt" ]; then
@@ -28,7 +28,7 @@ if [ -e "./deploy_tmp/template/files.txt" ]; then
 fi
 
 # Run template input script to collect specific inputs
-if [ -e "./deploy_tmp/template/input.sh" ]; then
+if [ -e "deploy_tmp/template/input.sh" ]; then
     echo "Running template input script"
     . ./deploy_tmp/template/input.sh
 fi
