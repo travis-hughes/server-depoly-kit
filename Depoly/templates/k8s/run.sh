@@ -8,16 +8,16 @@ echo "alias helm='microk8s helm'" > ~/.bashrc
 
 
 # Control Plane
-if [ "$SERVER_TEMPLATE" -eq 1 ]; then
+if [ "$KUBE_SYSTEM_TYPE" -eq 1 ]; then
   . ./deploy_tmp/control-plane.sh
 fi
 
 # Worker
-if [ "$SERVER_TEMPLATE" -eq 2 ]; then
+if [ "$KUBE_SYSTEM_TYPE" -eq 2 ]; then
   echo "Your worker is setup"
 fi
 
-# Standalone (dev)
-if [ "$SERVER_TEMPLATE" -eq 3 ]; then
+# Standalone (Dev)
+if [ "$KUBE_SYSTEM_TYPE" -eq 3 ]; then
   . ./deploy_tmp/standalone-dev.sh
 fi

@@ -1,0 +1,1 @@
+. ./deploy_tmp/template/run.sh
