@@ -1,5 +1,6 @@
 # Install microk8s
 sudo snap install microk8s --classic
+sudo snap enable microk8s
 microk8s status --wait-ready
 
 # Shorten microk8s kube commands (example: microk8s kubectl becomes kubectl)
