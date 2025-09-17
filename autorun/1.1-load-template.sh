@@ -1,7 +1,7 @@
 echo "\n========================================================================================\n"
 echo "Select a server template: \n"
 echo "1) Kubernetes (Experimental)"
-echo "2) Docker Swarm"
+echo "2) Docker"
 echo "\n========================================================================================\n"
 
 TEMPLATE=""
@@ -10,7 +10,7 @@ while true; do
     read -p "Option (1/3): " option
     case $option in
         1 ) TEMPLATE="k8s"; break ;;
-        2 ) TEMPLATE="swarm"; break ;;
+        2 ) TEMPLATE="docker"; break ;;
         * ) echo "Invalid input, try again." && exit 1 ;;
     esac
 done
