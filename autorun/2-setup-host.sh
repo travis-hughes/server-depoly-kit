@@ -8,9 +8,12 @@ echo "Please set a strong new password for your root user."
 passwd
 
 # Create user
-echo "\n Creating new user and setting up SSH... \n"
+echo "\n Creating new users and setting up SSH... \n"
 
-sudo adduser --ingroup root "$USERNAME"
+# usermod --password $(echo MY_NEW_PASSWORD | openssl passwd -1 -stdin) USERNAME
+
+sudo adduser --gecos "$USERNAME"
+sudo adduser --gecos "$USERNAME"-admin
 sudo usermod -a -G sudo "$USERNAME"
 
 mkdir -p /home/$USERNAME/.ssh
