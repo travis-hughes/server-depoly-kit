@@ -6,8 +6,9 @@ microk8s enable hostpath-storage
 microk8s enable rbac
 # microk8s enable cert-manager
 # microk8s enable dns:"$DNS_SERVER"
-microk8s enable metallb:"${HOST_PUBLIC_IP}-${HOST_PUBLIC_IP}"
+# microk8s enable metallb:"${HOST_PUBLIC_IP}-${HOST_PUBLIC_IP}"
 microk8s enable miniio # TODO: Add these options -c 100Gi -s ceph-xfs
+microk8s enable metallb
 microk8s enable dashboard
 microk8s enable dashboard-proxy
 
