@@ -63,5 +63,6 @@ token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d
 microk8s kubectl -n kube-system describe secret $token
 
 microk8s kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443 --address $HOST_PUBLIC_IP
+microk8s kubectl port-forward -n kube-system service/microk8s-console 11443:443 --address $HOST_PUBLIC_IP
 
 microk8s kubectl get all --all-namespaceso
