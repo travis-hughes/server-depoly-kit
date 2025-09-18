@@ -1,10 +1,11 @@
+TEMPLATE=""
+TEMPLATE_DIR="./deploy_tmp/template"
+
 echo "\n========================================================================================\n"
 echo "Select a server template: \n"
 echo "1) Kubernetes (Experimental)"
 echo "2) Docker"
 echo "\n========================================================================================\n"
-
-TEMPLATE=""
 
 while true; do
     read -p "Option (1/3): " option
@@ -16,19 +17,19 @@ while true; do
 done
 
 echo "Downloading Template Scripts"
-mkdir -p ./deploy_tmp/template/
+mkdir -p $TEMPLATE_DIR
 
-wget -q -P ./deploy_tmp/template/ https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/input.sh
-wget -q -P ./deploy_tmp/template/ https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/run.sh
-wget -q -P ./deploy_tmp/template/ https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/files.txt
+wget -q -P $TEMPLATE_DIR https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/input.sh
+wget -q -P $TEMPLATE_DIR https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/run.sh
+wget -q -P $TEMPLATE_DIR https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/files.txt
 
 
-if [ -e "./deploy_tmp/template/files.txt" ]; then
-    wget -q -P ./deploy_tmp/template -i ./deploy_tmp/template/files.txt -B https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"
+if [ -e "$TEMPLATE_DIR/files.txt" ]; then
+    wget -P $TEMPLATE_DIR -i $TEMPLATE_DIR/files.txt -B https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/
 fi
 
 # Run template input script to collect specific inputs
 if [ -e "deploy_tmp/template/input.sh" ]; then
     echo "Running template input script"
-    . ./deploy_tmp/template/input.sh
+    . $TEMPLATE_DIR/input.sh
 fi
