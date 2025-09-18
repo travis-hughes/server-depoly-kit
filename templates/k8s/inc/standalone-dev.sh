@@ -62,7 +62,9 @@ microk8s kubectl apply -f ./portainer_sc.yml
 token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
 microk8s kubectl -n kube-system describe secret $token
 
+# Open 
 microk8s kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443 --address $HOST_PUBLIC_IP
-microk8s kubectl port-forward -n kube-system service/microk8s-console 11443:443 --address $HOST_PUBLIC_IP
+microk8s kubectl port-forward -n minio-operator service/microk8s-console 11443:443 --address $HOST_PUBLIC_IP
+microk8s kubectl port-forward -n minio-operator service/console 12443:443 --address $HOST_PUBLIC_IP
 
 microk8s kubectl get all --all-namespaceso
