@@ -1,5 +1,6 @@
 TEMPLATE=""
 TEMPLATE_DIR="./deploy_tmp/template"
+FILE_URL="https://k8s-deploy.ap-host.net"
 
 echo "\n========================================================================================\n"
 echo "Select a server template: \n"
@@ -19,17 +20,17 @@ done
 echo "Downloading Template Scripts"
 mkdir -p $TEMPLATE_DIR
 
-wget -q -P $TEMPLATE_DIR https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/input.sh
-wget -q -P $TEMPLATE_DIR https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/run.sh
-wget -q -P $TEMPLATE_DIR https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/files.txt
+wget -q -P $TEMPLATE_DIR -B $FILE_URL templates/"$TEMPLATE"/input.sh
+wget -q -P $TEMPLATE_DIR -B $FILE_URL templates/"$TEMPLATE"/run.sh
+wget -q -P $TEMPLATE_DIR -B $FILE_URL templates/"$TEMPLATE"/files.txt
 
 
 if [ -e "$TEMPLATE_DIR/files.txt" ]; then
-    wget -P $TEMPLATE_DIR -i $TEMPLATE_DIR/files.txt -B https://k8s-deploy.ap-host.net/templates/"$TEMPLATE"/
+    wget -q -P $TEMPLATE_DIR -i $TEMPLATE_DIR/files.txt -B "$FILE_URL"/templates/"$TEMPLATE"/
 fi
 
 # Run template input script to collect specific inputs
-if [ -e "deploy_tmp/template/input.sh" ]; then
+if [ -e "$TEMPLATE_DIR/input.sh" ]; then
     echo "Running template input script"
     . $TEMPLATE_DIR/input.sh
 fi
