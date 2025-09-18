@@ -1,6 +1,8 @@
 HOST_PUBLIC_IP=$(tailscale ip)
 
-sudo microk8s addons repo update core
+microk8s addons repo update core
+microk8s enable community
+
 microk8s disable ha-cluster --force
 
 microk8s enable hostpath-storage
@@ -16,18 +18,6 @@ microk8s enable dashboard
 
 # Ingress Controller
 # kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
-
-# cat <<EOF | microk8s kubectl apply -f -
-# kind: StorageClass
-# apiVersion: storage.k8s.io/v1
-# metadata:
-#   name: local-system-storage
-# provisioner: microk8s.io/hostpath
-# reclaimPolicy: Delete
-# parameters:
-#   pvDir: /srv/k8s-storage
-# volumeBindingMode: WaitForFirstConsumer
-# EOF
 
 
 # Deploy Portainer
