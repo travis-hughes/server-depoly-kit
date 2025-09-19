@@ -21,9 +21,9 @@ done
 echo "Downloading Template Scripts"
 mkdir -p $TEMPLATE_DIR
 
-wget -q -P $TEMPLATE_DIR "https://k8s-deploy.ap-host.net/templates/$TEMPLATE/input.sh"
-wget -q -P $TEMPLATE_DIR "https://k8s-deploy.ap-host.net/templates/$TEMPLATE/run.sh"
-wget -q -P $TEMPLATE_DIR "https://k8s-deploy.ap-host.net/templates/$TEMPLATE/files.txt"
+wget -P $TEMPLATE_DIR "https://k8s-deploy.ap-host.net/templates/$TEMPLATE/input.sh"
+wget -P $TEMPLATE_DIR "https://k8s-deploy.ap-host.net/templates/$TEMPLATE/run.sh"
+wget -P $TEMPLATE_DIR "https://k8s-deploy.ap-host.net/templates/$TEMPLATE/files.txt"
 
 
 if [ -e "$TEMPLATE_DIR/files.txt" ]; then
