@@ -18,7 +18,7 @@ echo "$SSH_KEY" > /home/$USERNAME/.ssh/authorized_keys
 chown -R $USERNAME:sudo /home/$USERNAME/.ssh
 chmod 600 /home/$USERNAME/.ssh/authorized_keys
 
-sudo adduser --gecos "$USERNAME"-admin
+sudo adduser --gecos "$USERNAME-admin"
 sudo usermod -a -G sudo "$USERNAME"-admin
 echo "$SSH_KEY" > /home/$USERNAME-admin/.ssh/authorized_keys
 chown -R $USERNAME-admin:sudo /home/$USERNAME-admin/.ssh
