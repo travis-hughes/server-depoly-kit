@@ -16,14 +16,14 @@ while true; do
         * ) echo "Invalid input, try again." && exit 1 ;;
     esac
 done
-echo "$TEMPLATE" > deploy.env
+echo "TEMPLATE=$TEMPLATE" > deploy.env
 
 echo "Downloading Template Scripts"
 mkdir -p $TEMPLATE_DIR
 
-wget -q -P $TEMPLATE_DIR -B $FILE_URL templates/"$TEMPLATE"/input.sh
-wget -q -P $TEMPLATE_DIR -B $FILE_URL templates/"$TEMPLATE"/run.sh
-wget -q -P $TEMPLATE_DIR -B $FILE_URL templates/"$TEMPLATE"/files.txt
+wget -q -P $TEMPLATE_DIR -B $FILE_URL /templates/"$TEMPLATE"/input.sh
+wget -q -P $TEMPLATE_DIR -B $FILE_URL /templates/"$TEMPLATE"/run.sh
+wget -q -P $TEMPLATE_DIR -B $FILE_URL /templates/"$TEMPLATE"/files.txt
 
 
 if [ -e "$TEMPLATE_DIR/files.txt" ]; then

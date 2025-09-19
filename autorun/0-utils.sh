@@ -1,9 +1,8 @@
 input_field()
 {
   FIELD_NAME=$1
-  READ_ARGS=$2
 
-  read $READ_ARGS -p "$FIELD_NAME: " OUTPUT
+  read -p "$FIELD_NAME: " OUTPUT
   if [ -z "$OUTPUT" ]; then
     echo "$FIELD_NAME is empty"
     exit 1
@@ -18,10 +17,9 @@ ensure_var_defined()
 {
   Label=$1
   INPUT=$2
-  READ_ARGS=${3:-""}
 
   if [ -z "$INPUT" ]; then
-    INPUT=$( input_field $Label $READ_ARGS)
+    INPUT=$( input_field $Label)
   else
     echo "$Label already defined, skipping step..."
   fi
