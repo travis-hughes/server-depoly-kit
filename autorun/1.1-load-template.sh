@@ -21,9 +21,9 @@ done
 echo "Downloading Template Scripts"
 mkdir -p $TEMPLATE_DIR
 
-wget -P ./deploy_tmp/template "$FILE_URL/templates/$TEMPLATE/input.sh"
-wget -P ./deploy_tmp/template "$FILE_URL/templates/$TEMPLATE/run.sh"
-wget -P ./deploy_tmp/template "$FILE_URL/templates/$TEMPLATE/files.txt"
+wget -q -P ./deploy_tmp/template "$FILE_URL/templates/$TEMPLATE/input.sh"
+wget -q -P ./deploy_tmp/template "$FILE_URL/templates/$TEMPLATE/run.sh"
+wget -q -P ./deploy_tmp/template "$FILE_URL/templates/$TEMPLATE/files.txt"
 
 
 if [ -e "./deploy_tmp/template/files.txt" ]; then
