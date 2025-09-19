@@ -27,7 +27,7 @@ wget -q -P $TEMPLATE_DIR "https://k8s-deploy.ap-host.net/templates/$TEMPLATE/fil
 
 
 if [ -e "$TEMPLATE_DIR/files.txt" ]; then
-    wget -q -P $TEMPLATE_DIR -i $TEMPLATE_DIR/files.txt -B "$FILE_URL"/templates/"$TEMPLATE"/
+    wget -q -P $TEMPLATE_DIR -i $TEMPLATE_DIR/files.txt -B "$FILE_URL/templates/$TEMPLATE"
 fi
 
 # Run template input script to collect specific inputs
