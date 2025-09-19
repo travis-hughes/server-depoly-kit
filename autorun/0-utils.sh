@@ -9,7 +9,6 @@ input_field()
   fi
 
   # Retain value incase another call to input_field() forces an exit.
-  echo "$OUTPUT" > deploy.env
   echo "$OUTPUT"
 }
 

@@ -4,7 +4,7 @@ HOSTNAME=$( ensure_var_defined "Hostname" $HOSTNAME )
 
 echo "Enter some details for your user, the password will be specifed later on."
 USERNAME=$( ensure_var_defined "Username" $USERNAME )
-SSH_KEY=$( ensure_var_defined "SSH Key" $SSH_KEY -s )
+SSH_KEY=$( ensure_var_defined "SSH Key" $SSH_KEY )
 
 
 # echo "Please specify an email (used for system reporting)"
