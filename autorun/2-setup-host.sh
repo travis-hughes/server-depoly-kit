@@ -12,17 +12,19 @@ echo "\n Creating new users and setting up SSH... \n"
 
 # usermod --password $(echo MY_NEW_PASSWORD | openssl passwd -1 -stdin) USERNAME
 
-sudo adduser --gecos "$USERNAME"
+sudo adduser --gecos $USERNAME
 mkdir -p /home/$USERNAME/.ssh
 echo "$SSH_KEY" > /home/$USERNAME/.ssh/authorized_keys
+
 chown -R $USERNAME:sudo /home/$USERNAME/.ssh
 chmod 600 /home/$USERNAME/.ssh/authorized_keys
 
 sudo adduser --gecos "$USERNAME-admin"
-sudo usermod -a -G sudo "$USERNAME"-admin
+sudo usermod -a -G sudo "$USERNAME-admin"
 echo "$SSH_KEY" > /home/$USERNAME-admin/.ssh/authorized_keys
-chown -R $USERNAME-admin:sudo /home/$USERNAME-admin/.ssh
-chmod 600 /home/$USERNAME-admin/.ssh/authorized_keys
+
+chown -R "$USERNAME-admin:sudo /home/$USERNAME-admin/.ssh"
+chmod 600 "/home/$USERNAME-admin/.ssh/authorized_keys"
 
 
 echo "\n Disabling SSH password authentication... \n"
