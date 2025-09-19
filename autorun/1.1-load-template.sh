@@ -16,6 +16,7 @@ while true; do
         * ) echo "Invalid input, try again." && exit 1 ;;
     esac
 done
+echo "$TEMPLATE" > deploy.env
 
 echo "Downloading Template Scripts"
 mkdir -p $TEMPLATE_DIR

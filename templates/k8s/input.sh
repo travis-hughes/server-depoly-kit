@@ -14,5 +14,3 @@ while true; do
         * ) echo "Invalid input, try again." && exit 1 ;;
     esac
 done
-
-HETZNER_S3_TOKEN=$( ensure_var_defined "Hetzner S3 Token" $HETZNER_S3_TOKEN )
