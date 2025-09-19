@@ -9,7 +9,7 @@ echo "\n Creating new users and setting up SSH... \n"
 #     passwd
 # fi
 
-sudo adduser --ingroup root "$USERNAME"
+sudo adduser --ingroup sudo "$USERNAME"
 # sudo adduser --gecos --ingroup sudo $USERNAME
 mkdir -p /home/"$USERNAME"/.ssh
 echo "$SSH_KEY" > /home/"$USERNAME"/.ssh/authorized_keys
