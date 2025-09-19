@@ -5,16 +5,39 @@ echo "\n Creating new users and setting up SSH... \n"
 # if [ $USER = root ]; then
 #     RANDOM_PASS=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 13; echo)
 #     usermod --password $(echo RANDOM_PASS | openssl passwd -1 -stdin) root
+#     echo "" > "~/.ssh/authorized_keys"
 # else
+#     echo "Set a strong password for the account your using"
 #     passwd
+#     echo "" > "~/.ssh/authorized_keys"
 # fi
 
-sudo adduser --ingroup sudo "$USERNAME"
 # sudo adduser --gecos --ingroup sudo $USERNAME
-mkdir -p /home/"$USERNAME"/.ssh
-echo "$SSH_KEY" > /home/"$USERNAME"/.ssh/authorized_keys
-# chown -R "$USERNAME":sudo /home/"$USERNAME"/.ssh
-# chmod 600 /home/"$USERNAME"/.ssh/authorized_keys
+
+add_user()
+{
+    F_USERNAME=$1
+    F_GROUP=$2
+
+    sudo adduser --gecos "" --ingroup "$F_GROUP" "$F_USERNAME"
+    mkdir -p /home/"$F_USERNAME"/.ssh
+    # echo "$SSH_KEY" > /home/"$F_USERNAME"/.ssh/authorized_keys
+    echo "$SSH_KEY" | sudo tee /home/"$F_USERNAME"/.ssh/authorized_keys > /dev/null
+
+    sudo chown -R "$F_USERNAME":$F_GROUP /home/"$F_USERNAME"/.ssh
+    sudo chmod 700 /home/"$F_USERNAME"/.ssh
+    sudo chmod 600 /home/"$F_USERNAME"/.ssh/authorized_keys
+}
+
+add_user "$USERNAME-admin" sudo
+add_user "$USERNAME" users
+
+# sudo adduser --gecos --ingroup sudo "$USERNAME"
+# mkdir -p /home/"$USERNAME"/.ssh
+# echo "$SSH_KEY" > /home/"$USERNAME"/.ssh/authorized_keys
+# sudo chown -R "$USERNAME":sudo /home/"$USERNAME"/.ssh
+# sudo chmod 700 /home/"$USERNAME"/.ssh
+# sudo chmod 600 /home/"$USERNAME"/.ssh/authorized_keys
 
 # sudo adduser --gecos "$USERNAME"
 # mkdir -p "/home/$USERNAME/.ssh"
