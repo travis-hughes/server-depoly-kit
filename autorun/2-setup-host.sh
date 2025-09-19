@@ -1,30 +1,35 @@
-# Install and configure Tailscale
-echo "Installing Tailscale..."
-curl -fsSL https://tailscale.com/install.sh | bash
-tailscale up --accept-risk=all
-
-
-echo "Please set a strong new password for your root user."
-passwd
-
 # Create user
 echo "\n Creating new users and setting up SSH... \n"
 
-# usermod --password $(echo MY_NEW_PASSWORD | openssl passwd -1 -stdin) USERNAME
+# echo "Setting ramdom Root password - disable access"
+# if [ $USER = root ]; then
+#     RANDOM_PASS=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 13; echo)
+#     usermod --password $(echo RANDOM_PASS | openssl passwd -1 -stdin) root
+# else
+#     passwd
+# fi
 
-sudo adduser --gecos $USERNAME
-mkdir -p /home/$USERNAME/.ssh
-echo "$SSH_KEY" > /home/$USERNAME/.ssh/authorized_keys
+sudo adduser --ingroup root "$USERNAME"
+# sudo adduser --gecos --ingroup sudo $USERNAME
+mkdir -p /home/"$USERNAME"/.ssh
+echo "$SSH_KEY" > /home/"$USERNAME"/.ssh/authorized_keys
+# chown -R "$USERNAME":sudo /home/"$USERNAME"/.ssh
+# chmod 600 /home/"$USERNAME"/.ssh/authorized_keys
 
-chown -R $USERNAME:sudo /home/$USERNAME/.ssh
-chmod 600 /home/$USERNAME/.ssh/authorized_keys
+# sudo adduser --gecos "$USERNAME"
+# mkdir -p "/home/$USERNAME/.ssh"
+# echo "$SSH_KEY" > "/home/$USERNAME/.ssh/authorized_keys"
 
-sudo adduser --gecos "$USERNAME-admin"
-sudo usermod -a -G sudo "$USERNAME-admin"
-echo "$SSH_KEY" > /home/$USERNAME-admin/.ssh/authorized_keys
+# chown -R "$USERNAME:sudo" "/home/$USERNAME/.ssh"
+# chmod 600 /home/$USERNAME/.ssh/authorized_keys
 
-chown -R "$USERNAME-admin:sudo /home/$USERNAME-admin/.ssh"
-chmod 600 "/home/$USERNAME-admin/.ssh/authorized_keys"
+
+# sudo adduser --gecos "$USERNAME-admin"
+# sudo usermod -a -G sudo "$USERNAME-admin"
+# echo "$SSH_KEY" > "/home/$USERNAME-admin/.ssh/authorized_keys"
+
+# chown -R "$USERNAME-admin:sudo" "/home/$USERNAME-admin/.ssh"
+# chmod 600 "/home/$USERNAME-admin/.ssh/authorized_keys"
 
 
 echo "\n Disabling SSH password authentication... \n"
@@ -33,13 +38,22 @@ rm -f /etc/ssh/sshd_config.d/*
 mkdir -p /etc/ssh/sshd_config.d
 echo "PasswordAuthentication no" > /etc/ssh/sshd_config.d/disable-password-auth.conf
 
+
+
 echo "Setting system hostname and timezone..."
 hostnamectl set-hostname "$HOSTNAME"
 timedatectl set-timezone Europe/London
 
+# Install and configure Tailscale
+echo "Installing Tailscale..."
+curl -fsSL https://tailscale.com/install.sh | bash
+tailscale up --accept-risk=all
+
+
+echo "Cron Jobs"
 # Add cron job to reboot at 6:00 AM
-echo "Adding auto reboot cronjob"
 (crontab -l 2>/dev/null; echo "0 6 * * * /sbin/reboot") | crontab -
+
 
 # Update packages and install required software
 echo "Updating system and installing necessary packages..."
