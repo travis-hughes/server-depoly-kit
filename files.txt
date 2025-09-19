@@ -1,5 +1,5 @@
 autorun/0-utils.sh
 autorun/1-start.sh
-autorun/1.1-load-template.sh
-autorun/2-setup-host.sh
-autorun/3-run-template.sh
+autorun/2-select-template.sh
+autorun/3-setup-host.sh
+autorun/4-install-template.sh
