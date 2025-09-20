@@ -24,25 +24,27 @@ add_user "$USERNAME-admin" sudo
 add_user "$USERNAME" users
 echo "$SSH_KEY" | sudo tee /home/"$USERNAME"/.ssh/authorized_keys > /dev/null
 
-
-# if [ $USER = root ]; then
-#     echo "Disabling root user access"
-#     RANDOM_PASS=$(tr -dc A-Za-z0-9 </dev/urandom | head -c 13; echo)
-#     usermod --password $(echo RANDOM_PASS | openssl passwd -1 -stdin) root
-#     echo "" > "~/.ssh/authorized_keys"
-# else
-#     echo "Please set a strong password for the current account."
-#     passwd
-#     echo "" > "~/.ssh/authorized_keys"
-# fi
-
+# NOTE: Testing!
+# If root user then lock access off. Else set a strong password.
+if [ $USER = root ]; then
+    echo "Disabling root user access"
+    sudo passwd -l root
+    echo "" > "~/.ssh/authorized_keys"
+else
+    echo "Please set a strong password for the current account."
+    passwd
+    echo "" > "~/.ssh/authorized_keys"
+fi
 
 echo "\n Disabling SSH password authentication... \n"
 rm -f /etc/ssh/sshd_config.d/*
 mkdir -p /etc/ssh/sshd_config.d
 echo "PasswordAuthentication no" > /etc/ssh/sshd_config.d/disable-password-auth.conf
 
-# TODO: Switch account to "$USERNAME-admin" here
+
+# NOTE: Testing!
+# Switch to the default admin account.
+su - "$USERNAME-admin"
 
 
 echo "Setting system hostname and timezone..."
