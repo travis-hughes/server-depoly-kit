@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# For Ubuntu 24.04 LTS
-# Published URL: https://k8s-deploy.ap-host.net/run.sh
-
 EXACUTION_DIR=$(dirname $0)
-TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
+
 
 # Ensure we're running as root
 if [ "$(id -u)" -ne 0 ]; then
@@ -13,29 +10,18 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+wget -q -P "$EXACUTION_DIR" "$FILE_URL/session.sh"
 
-# Create Tempory Folder
-mkdir -p "$TEMP_DATA_PATH"
+echo "Starting Tmux Server"
+tmux start-server
 
-# If deploy.env exists, load it.
-if [ -e "deploy.env" ]; then
-  echo "Environment Variables have been detected, loading them..."
-  . ./deploy.env
+# Run tmux session if not already running
+if [ -z "$TMUX" ]; then
+  echo "\n Launching inside tmux session: deploy_session \n"
+
+  if tmux has-session -t deploy_session 2>/dev/null; then
+    tmux attach -t deploy_session
+  else
+    tmux new-session -s deploy_session "sudo sh $EXACUTION_DIR/session.sh"
+  fi
 fi
-
-
-# Download dependancy files
-wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
-wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
-
-
-# Load scripts from autorun folder
-for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
-  echo "\n ▶️ Exacuting autorun script: $FILE \n"
-  . "$FILE"
-done
-
-# Cleanup and reboot
-rm -r "$TEMP_DATA_PATH"
-rm deploy.env
-reboot
