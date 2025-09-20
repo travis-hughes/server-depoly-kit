@@ -46,16 +46,18 @@ microk8s helm upgrade --install --create-namespace -n portainer portainer portai
   --set image.tag=lts \
   --set persistence.storageClass=portainer-sc
 
-microk8s kubectl wait --for=condition=ready pod -l app=portainer
-microk8s kubectl wait --for=condition=ready pod -l app=kubernetes-dashboard
-microk8s kubectl wait --for=condition=ready pod -l app=microk8s-console
-microk8s kubectl wait --for=condition=ready pod -l app=console
+echo "Waiting for Services to be ready..."
+microk8s kubectl wait --for=condition=available service/portainer
+microk8s kubectl wait --for=condition=available service/kubernetes-dashboard
+microk8s kubectl wait --for=condition=available service/microk8s-console
+microk8s kubectl wait --for=condition=available service/console
 
 # Get Dashboard Token
 token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
 microk8s kubectl -n kube-system describe secret $token
 
 # Open
+echo "Port Forwarding Services..."
 microk8s kubectl port-forward -n portainer service/portainer 9443:9443
 microk8s kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443
 microk8s kubectl port-forward -n minio-operator service/microk8s-console 11443:443

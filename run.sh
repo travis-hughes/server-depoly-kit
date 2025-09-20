@@ -47,6 +47,6 @@ for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
 done
 
 # Cleanup and reboot
-rm "$TEMP_DATA_PATH"
+rm -r "$TEMP_DATA_PATH"
 rm deploy.env
 reboot
