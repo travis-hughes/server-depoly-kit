@@ -1,5 +1,6 @@
 #!/bin/bash
 
+EXACUTION_DIR=$(dirname $0)
 TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
 
@@ -25,6 +26,7 @@ for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
 done
 
 # Cleanup and reboot
+rm "$EXACUTION_DIR/session.sh"
 rm -r "$TEMP_DATA_PATH"
 rm deploy.env
 reboot

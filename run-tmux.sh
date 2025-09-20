@@ -10,7 +10,7 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-wget -q -P "$EXACUTION_DIR" "$FILE_URL/tmux-session.sh"
+wget -q -P "$EXACUTION_DIR" "$FILE_URL/session.sh"
 
 echo "Starting Tmux Server"
 tmux start-server
@@ -22,11 +22,9 @@ if [ -z "$TMUX" ]; then
   if tmux has-session -t deploy_session 2>/dev/null; then
     tmux attach -t deploy_session
   else
-    tmux new-session -s deploy_session "sudo sh $EXACUTION_DIR/tmux-session.sh"
+    tmux new-session -s deploy_session "sudo sh $EXACUTION_DIR/session.sh"
   fi
 
   echo "Tmux Session could not be found or created"
   exit 1
 fi
-
-rm "$EXACUTION_DIR/tmux-session.sh"

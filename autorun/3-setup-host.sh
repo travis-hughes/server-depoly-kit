@@ -27,11 +27,11 @@ echo "$SSH_KEY" | sudo tee /home/"$USERNAME"/.ssh/authorized_keys > /dev/null
 if [ $USER = root ]; then
     echo "Disabling root user access"
     sudo passwd -l root
-    rm "~/.ssh/authorized_keys"
+    sudo rm "~/.ssh/authorized_keys"
 else
     echo "Please set a strong password for the current account."
     passwd
-    rm "~/.ssh/authorized_keys"
+    sudo rm "~/.ssh/authorized_keys"
 fi
 
 echo "\n Disabling SSH password authentication... \n"
