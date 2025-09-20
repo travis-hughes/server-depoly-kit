@@ -44,7 +44,8 @@ microk8s helm upgrade --install --create-namespace -n portainer portainer portai
   --set service.type=LoadBalancer \
   --set tls.force=false \
   --set image.tag=lts \
-  --set service.httpNodePort=9902 \
+  # --set service.httpNodePort=9902 \
+  --set service.edgePort=8001 \
   --set persistence.storageClass=portainer-sc
 
 # echo "Waiting for Services to be ready..."
