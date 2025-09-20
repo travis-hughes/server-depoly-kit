@@ -11,5 +11,20 @@ stty -echo
 SSH_KEY=$( ensure_var_defined "SSH Key" $SSH_KEY )
 stty echo
 
+# echo "\n========================================================================================\n"
+# echo "Select a server template: \n"
+# echo "1) Kubernetes (Experimental)"
+# echo "2) Docker"
+# echo "\n========================================================================================\n"
+
+# read -p "Option (1/2): " option
+# case "$option" in
+#     1 ) TEMPLATE="k8s" ;;
+#     2 ) TEMPLATE="docker" ;;
+#     * ) echo "Invalid input, try again." && exit 1 ;;
+# esac
+
+$TEMPLATE = $(select_field "Select a server template:" "k8s:Kubernetes (Experimental)" "docker:Docker")
+
 # echo "Please specify an email (used for system reporting)"
 # EMAIL=$( input_field "System Reporting Email" )

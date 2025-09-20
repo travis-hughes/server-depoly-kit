@@ -12,6 +12,8 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+tmux new-session -s server_deploy_kit
+
 
 # Create Tempory Folder
 mkdir -p "$TEMP_DATA_PATH"
