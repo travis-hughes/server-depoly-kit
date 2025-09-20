@@ -53,9 +53,7 @@ select_field() {
   L_LABELS_FILE=$(mktemp)
   L_option_index=1
 
-  echo
   echo "$L_prompt"
-  echo
 
   # Parse "key:label" pairs and display them as a numbered list
   for L_pair in "$@"; do
@@ -69,27 +67,26 @@ select_field() {
     L_option_index=$((L_option_index + 1))
   done
 
-  echo
-  L_total_options=$#
+  # L_total_options=$#
 
   # Loop until a valid numeric input is given
-  while true; do
-    printf "Option (1-%s): " "$L_total_options"
-    read L_user_input
+  # while true; do
+  #   printf "Option (1-%s): " "$L_total_options"
+  #   read L_user_input
 
-    case "$L_user_input" in
-      ''|*[!0-9]*) echo "❌ Invalid input. Please enter a number." ;;
-      *)
-        if [ "$L_user_input" -ge 1 ] 2>/dev/null && [ "$L_user_input" -le "$L_total_options" ]; then
-          L_SELECTED_KEY=$(sed -n "${L_user_input}p" "$L_KEYS_FILE")
-          L_SELECTED_LABEL=$(sed -n "${L_user_input}p" "$L_LABELS_FILE")
-          break
-        else
-          echo "❌ Input out of range. Please select between 1 and $L_total_options."
-        fi
-      ;;
-    esac
-  done
+  #   case "$L_user_input" in
+  #     ''|*[!0-9]*) echo "❌ Invalid input. Please enter a number." ;;
+  #     *)
+  #       if [ "$L_user_input" -ge 1 ] 2>/dev/null && [ "$L_user_input" -le "$L_total_options" ]; then
+  #         L_SELECTED_KEY=$(sed -n "${L_user_input}p" "$L_KEYS_FILE")
+  #         L_SELECTED_LABEL=$(sed -n "${L_user_input}p" "$L_LABELS_FILE")
+  #         break
+  #       else
+  #         echo "❌ Input out of range. Please select between 1 and $L_total_options."
+  #       fi
+  #     ;;
+  #   esac
+  # done
 
   # Export selected values for use outside the function
   # export L_SELECTED_KEY

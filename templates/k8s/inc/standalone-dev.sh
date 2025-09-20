@@ -2,6 +2,7 @@ HOST_PUBLIC_IP=$(tailscale ip)
 
 microk8s enable community
 microk8s addons repo update core
+microk8s addons repo update community
 
 microk8s disable ha-cluster --force
 
@@ -12,7 +13,7 @@ microk8s enable ingress
 # microk8s enable dns:"$DNS_SERVER"
 # microk8s enable metallb:"${HOST_PUBLIC_IP}-${HOST_PUBLIC_IP}"
 # TODO: Add these options -c 100Gi -s ceph-xfs
-microk8s enable miniio
+microk8s enable minio
 microk8s enable metallb
 microk8s enable dashboard
 
