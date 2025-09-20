@@ -18,11 +18,16 @@ fi
 mkdir -p "$TEMP_DATA_PATH"
 
 
+# # Download dependancy files
+wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
+wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
+
+
 # If deploy.env exists, load it.
-if [ -e "deploy.env" ]; then
-  echo "Environment Variables have been detected, loading them..."
-  . ./deploy.env
-fi
+# if [ -e "deploy.env" ]; then
+#   echo "Environment Variables have been detected, loading them..."
+#   . ./deploy.env
+# fi
 
 
 # Run tmux if not already running
@@ -33,11 +38,6 @@ else
   tmux attach deploy_session
   # exit
 fi
-
-
-# # Download dependancy files
-# wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
-# wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
 
 # # Load scripts from autorun folder
 # for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
