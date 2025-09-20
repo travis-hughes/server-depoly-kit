@@ -3,9 +3,11 @@ sudo snap install microk8s --classic
 echo "Waiting for MicroK8s to start"
 microk8s status --wait-ready
 
-# Shorten microk8s kube commands (example: microk8s kubectl becomes kubectl)
-echo "alias kubectl='microk8s kubectl'" > ~/.bashrc
-echo "alias helm='microk8s helm'" > ~/.bashrc
+
+# Add default user to microk8s group
+# We do this so we don't need to run all microk8s commands as sudo
+usermod -a -G microk8s "$USERNAME"
+usermod -a -G microk8s "$USERNAME-admin"
 
 
 # Control Plane
