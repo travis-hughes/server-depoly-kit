@@ -18,20 +18,6 @@ fi
 mkdir -p "$TEMP_DATA_PATH"
 
 
-# Run tmux if not already running
-if [ -z "$TMUX" ]; then
-  echo "🔁 Relaunching inside tmux session: deploy_session"
-  tmux new-session -d -s deploy_session "$EXACUTION_DIR/run.sh"
-  tmux attach deploy_session
-  exit
-else
-  tmux attach deploy_session
-  exit
-fi
-
-echo "✅ Running inside tmux session: $TMUX"
-
-
 # If deploy.env exists, load it.
 if [ -e "deploy.env" ]; then
   echo "Environment Variables have been detected, loading them..."
@@ -39,17 +25,27 @@ if [ -e "deploy.env" ]; then
 fi
 
 
-# Download dependancy files
-wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
-wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
+# Run tmux if not already running
+if [ -z "$TMUX" ]; then
+  echo "🔁 Relaunching inside tmux session: deploy_session"
+  tmux new-session -s deploy_session -e "$EXACUTION_DIR" -e "$TEMP_DATA_PATH" -e "$FILE_URL" "$TEMP_DATA_PATH/session.sh"
+else
+  tmux attach deploy_session
+  # exit
+fi
 
-# Load scripts from autorun folder
-for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
-  echo "\n ▶️ Exacuting autorun script: $FILE \n"
-  . "$FILE"
-done
 
-# Cleanup and reboot
-rm "$TEMP_DATA_PATH"
-rm deploy.env
-reboot
+# # Download dependancy files
+# wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
+# wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
+
+# # Load scripts from autorun folder
+# for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
+#   echo "\n ▶️ Exacuting autorun script: $FILE \n"
+#   . "$FILE"
+# done
+
+# # Cleanup and reboot
+# rm "$TEMP_DATA_PATH"
+# rm deploy.env
+# reboot
