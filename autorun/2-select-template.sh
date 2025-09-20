@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# TEMPLATE=""
 TEMPLATE_DIR="$TEMP_DATA_PATH/template"
 
 echo "Downloading Template Scripts"
