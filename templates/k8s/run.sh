@@ -10,7 +10,7 @@ echo "alias helm='microk8s helm'" > ~/.bashrc
 
 # Control Plane
 if [ "$KUBE_SYSTEM_TYPE" -eq 1 ]; then
-  . ./deploy_tmp/template/control-plane.sh
+  . "$TEMPLATE_DIR/control-plane.sh"
 fi
 
 # Worker
@@ -20,5 +20,5 @@ fi
 
 # Standalone (Dev)
 if [ "$KUBE_SYSTEM_TYPE" -eq 3 ]; then
-  . ./deploy_tmp/template/standalone-dev.sh
+  . "$TEMPLATE_DIR/standalone-dev.sh"
 fi

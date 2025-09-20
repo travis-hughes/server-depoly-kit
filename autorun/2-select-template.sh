@@ -16,8 +16,6 @@ case "$option" in
     * ) echo "Invalid input, try again." && exit 1 ;;
 esac
 
-# echo "TEMPLATE=$TEMPLATE" > deploy.env
-
 echo "Downloading Template Scripts"
 mkdir -p "$TEMPLATE_DIR"
 
