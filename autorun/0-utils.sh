@@ -25,3 +25,19 @@ ensure_var_defined()
 
   echo "$INPUT"
 }
+
+input_yn()
+{
+  L_QUESTION=$1
+
+  while true; do
+    read -p "$L_QUESTION " yn
+    case $yn in
+        [Yy]* ) OUTPUT=1; break;;
+        [Nn]* ) OUTPUT=2; break ;;
+        * ) echo "Please answer yes or no.";;
+    esac
+  done
+
+  echo "$OUTPUT"
+}

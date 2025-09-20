@@ -3,6 +3,9 @@
 # For Ubuntu 24.04 LTS
 # Published URL: https://k8s-deploy.ap-host.net/run.sh
 
+TEMP_DATA_PATH=/srv/deploy_tmp
+FILE_URL=https://k8s-deploy.ap-host.net
+
 # Ensure we're running as root
 if [ "$(id -u)" -ne 0 ]; then
   echo "This script must be run as root. Use sudo." 
@@ -11,7 +14,7 @@ fi
 
 
 # Create Tempory Folder
-mkdir ./deploy_tmp
+mkdir -p "$TEMP_DATA_PATH"
 
 
 # If deploy.env exists, load it.
@@ -22,16 +25,16 @@ fi
 
 
 # Download dependancy files
-wget -q -P ./deploy_tmp https://k8s-deploy.ap-host.net/files.txt
-wget -q -P ./deploy_tmp -i ./deploy_tmp/files.txt -B https://k8s-deploy.ap-host.net
+wget -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
+wget -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
 
 # Load scripts from autorun folder
-for FILE in ./deploy_tmp/*-*.sh; do
+for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
   echo "\n ▶️ Exacuting autorun script: $FILE \n"
   . $FILE
 done
 
 # Cleanup and reboot
-rm ./deploy_tmp
+rm "$TEMP_DATA_PATH"
 rm deploy.env
 reboot
