@@ -27,8 +27,8 @@ fi
 
 
 # Download dependancy files
-wget -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
-wget -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
+wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
+wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
 
 # Load scripts from autorun folder
 for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
