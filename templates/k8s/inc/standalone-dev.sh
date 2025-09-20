@@ -46,6 +46,10 @@ microk8s helm upgrade --install --create-namespace -n portainer portainer portai
   --set image.tag=lts \
   --set persistence.storageClass=portainer-sc
 
+microk8s kubectl wait --for=condition=ready pod -l app=portainer
+microk8s kubectl wait --for=condition=ready pod -l app=kubernetes-dashboard
+microk8s kubectl wait --for=condition=ready pod -l app=microk8s-console
+microk8s kubectl wait --for=condition=ready pod -l app=console
 
 # Get Dashboard Token
 token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
