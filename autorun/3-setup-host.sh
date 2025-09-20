@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Create user
 echo "\n Creating new users \n"
 
@@ -40,6 +42,7 @@ rm -f /etc/ssh/sshd_config.d/*
 mkdir -p /etc/ssh/sshd_config.d
 echo "PasswordAuthentication no" > /etc/ssh/sshd_config.d/disable-password-auth.conf
 
+# TODO: Switch account to "$USERNAME-admin" here
 
 
 echo "Setting system hostname and timezone..."

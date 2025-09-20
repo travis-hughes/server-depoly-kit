@@ -1,3 +1,5 @@
+#!/bin/bash
+
 input_field()
 {
   FIELD_NAME=$1

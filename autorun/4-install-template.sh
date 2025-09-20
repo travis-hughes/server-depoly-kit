@@ -1,1 +1,3 @@
+#!/bin/bash
+
 . "$TEMP_DATA_PATH/template/run.sh"

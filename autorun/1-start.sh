@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Read inputs
 echo "Please specify a system hostname (example: server-swarm-manager)"
 HOSTNAME=$( ensure_var_defined "Hostname" $HOSTNAME )

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 TEMPLATE=""
 TEMPLATE_DIR="$TEMP_DATA_PATH/template"
 
