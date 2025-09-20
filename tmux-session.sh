@@ -9,6 +9,9 @@ if [ -e "deploy.env" ]; then
   . ./deploy.env
 fi
 
+# Create Tempory Folder
+mkdir -p "$TEMP_DATA_PATH"
+
 
 # Download dependancy files
 wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"

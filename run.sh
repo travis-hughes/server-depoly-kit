@@ -29,17 +29,6 @@ wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
 wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
 
 
-# Run tmux if not already running
-# if [ -z "$TMUX" ]; then
-#   echo "🔁 Relaunching inside tmux session: deploy_session"
-#   if tmux has-session -t deploy_session 2>/dev/null; then
-#     tmux attach -t deploy_session
-#   else
-#     tmux new-session -s deploy_session "bash $TEMP_DATA_PATH/session.sh"
-#   fi
-#   exit
-# fi
-
 # Load scripts from autorun folder
 for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
   echo "\n ▶️ Exacuting autorun script: $FILE \n"
