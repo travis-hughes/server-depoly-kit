@@ -1,20 +1,22 @@
 #!/bin/bash
 
-TEMPLATE=""
+# TEMPLATE=""
 TEMPLATE_DIR="$TEMP_DATA_PATH/template"
 
-echo "\n========================================================================================\n"
-echo "Select a server template: \n"
-echo "1) Kubernetes (Experimental)"
-echo "2) Docker"
-echo "\n========================================================================================\n"
+# echo "\n========================================================================================\n"
+# echo "Select a server template: \n"
+# echo "1) Kubernetes (Experimental)"
+# echo "2) Docker"
+# echo "\n========================================================================================\n"
 
-read -p "Option (1/2): " option
-case "$option" in
-    1 ) TEMPLATE="k8s" ;;
-    2 ) TEMPLATE="docker" ;;
-    * ) echo "Invalid input, try again." && exit 1 ;;
-esac
+# read -p "Option (1/2): " option
+# case "$option" in
+#     1 ) TEMPLATE="k8s" ;;
+#     2 ) TEMPLATE="docker" ;;
+#     * ) echo "Invalid input, try again." && exit 1 ;;
+# esac
+
+$TEMPLATE = $(select_field "Select a server template:" "k8s:Kubernetes (Experimental)" "docker:Docker")
 
 echo "Downloading Template Scripts"
 mkdir -p "$TEMPLATE_DIR"
