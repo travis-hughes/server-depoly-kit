@@ -7,9 +7,10 @@ HOSTNAME=$( ensure_var_defined "Hostname" $HOSTNAME )
 echo "Enter some details for your user, the password will be specifed later on."
 USERNAME=$( ensure_var_defined "Username" $USERNAME )
 
+stty_orig=`stty -g`
 stty -echo
 SSH_KEY=$( ensure_var_defined "SSH Key" $SSH_KEY )
-stty echo
+stty $stty_orig
 
 # echo "\n========================================================================================\n"
 # echo "Select a server template: \n"

@@ -3,4 +3,3 @@ autorun/1-start.sh
 autorun/2-select-template.sh
 autorun/3-setup-host.sh
 autorun/4-install-template.sh
-session.sh
