@@ -12,7 +12,6 @@ add_user()
 
     sudo adduser --gecos "" --ingroup "$L_GROUP" "$L_USERNAME"
     mkdir -p /home/"$L_USERNAME"/.ssh
-    # echo "$SSH_KEY" > /home/"$F_USERNAME"/.ssh/authorized_keys
 
     sudo chown -R "$L_USERNAME":$L_GROUP /home/"$L_USERNAME"/.ssh
     sudo chmod 700 /home/"$L_USERNAME"/.ssh

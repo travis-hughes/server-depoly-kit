@@ -3,7 +3,7 @@
 # For Ubuntu 24.04 LTS
 # Published URL: https://k8s-deploy.ap-host.net/run.sh
 
-# EXACUTION_DIR=$(dirname $0)
+EXACUTION_DIR=$(dirname $0)
 TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
 
