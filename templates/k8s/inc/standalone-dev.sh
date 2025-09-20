@@ -47,20 +47,21 @@ microk8s helm upgrade --install --create-namespace -n portainer portainer portai
   --set service.httpNodePort=9902 \
   --set persistence.storageClass=portainer-sc
 
-echo "Waiting for Services to be ready..."
-microk8s kubectl wait --for=condition=available service/portainer
-microk8s kubectl wait --for=condition=available service/kubernetes-dashboard
-microk8s kubectl wait --for=condition=available service/operator
+# echo "Waiting for Services to be ready..."
+# NOTE: Not Working!
+# microk8s kubectl wait --for=condition=available service/portainer
+# microk8s kubectl wait --for=condition=available service/kubernetes-dashboard
+# microk8s kubectl wait --for=condition=available service/operator
 
 # Get Dashboard Token
 token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
 microk8s kubectl -n kube-system describe secret $token
 
-# Open
-echo "Port Forwarding Services..."
-microk8s kubectl port-forward -n portainer service/portainer 9443:9443
-microk8s kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443
-microk8s kubectl port-forward -n minio-operator service/microk8s-console 11443:443
-microk8s kubectl port-forward -n minio-operator service/console 12443:443
+# echo "Port Forwarding Services..."
+# NOTE: Not Working!
+# microk8s kubectl port-forward -n portainer service/portainer 9443:9443
+# microk8s kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443
+# microk8s kubectl port-forward -n minio-operator service/microk8s-console 11443:443
+# microk8s kubectl port-forward -n minio-operator service/console 12443:443
 
 microk8s kubectl get all --all-namespaces

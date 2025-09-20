@@ -15,7 +15,7 @@ wget -q -P "$EXACUTION_DIR" "$FILE_URL/session.sh"
 echo "Starting Tmux Server"
 tmux start-server
 
-# Run tmux if not already running
+# Run tmux session if not already running
 if [ -z "$TMUX" ]; then
   echo "\n Launching inside tmux session: deploy_session \n"
 
