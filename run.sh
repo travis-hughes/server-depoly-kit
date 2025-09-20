@@ -3,6 +3,7 @@
 # For Ubuntu 24.04 LTS
 # Published URL: https://k8s-deploy.ap-host.net/run.sh
 
+EXACUTION_DIR=$(dirname $0)
 TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
 
@@ -13,17 +14,22 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 
-# Check if we're already inside tmux
+# Create Tempory Folder
+mkdir -p "$TEMP_DATA_PATH"
+
+
+# Run tmux if not already running
 if [ -z "$TMUX" ]; then
   echo "🔁 Relaunching inside tmux session: deploy_session"
-  tmux new-session -s deploy_session "$0"
+  tmux new-session -d -s deploy_session "$EXACUTION_DIR/run.sh"
+  tmux attach deploy_session
+  exit
+else
+  tmux attach deploy_session
   exit
 fi
 
 echo "✅ Running inside tmux session: $TMUX"
-
-# Create Tempory Folder
-mkdir -p "$TEMP_DATA_PATH"
 
 
 # If deploy.env exists, load it.
