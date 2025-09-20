@@ -9,7 +9,7 @@ USERNAME=$( ensure_var_defined "Username" $USERNAME )
 
 stty -echo
 SSH_KEY=$( ensure_var_defined "SSH Key" $SSH_KEY )
-stty
+stty echo
 
 # echo "Please specify an email (used for system reporting)"
 # EMAIL=$( input_field "System Reporting Email" )
