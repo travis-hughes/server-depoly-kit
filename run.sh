@@ -31,7 +31,7 @@ wget -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
 # Load scripts from autorun folder
 for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
   echo "\n ▶️ Exacuting autorun script: $FILE \n"
-  . $FILE
+  . "$FILE"
 done
 
 # Cleanup and reboot
