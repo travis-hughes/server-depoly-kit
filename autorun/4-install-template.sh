@@ -1,1 +1,1 @@
-. ./deploy_tmp/template/run.sh
+. "$TEMP_DATA_PATH/template/run.sh"
