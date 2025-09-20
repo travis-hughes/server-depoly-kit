@@ -12,8 +12,15 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-tmux new-session -s server_deploy_kit
 
+# Check if we're already inside tmux
+if [ -z "$TMUX" ]; then
+  echo "🔁 Relaunching inside tmux session: deploy_session"
+  tmux new-session -s deploy_session "$0"
+  exit
+fi
+
+echo "✅ Running inside tmux session: $TMUX"
 
 # Create Tempory Folder
 mkdir -p "$TEMP_DATA_PATH"
