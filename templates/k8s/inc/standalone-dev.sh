@@ -17,52 +17,14 @@ microk8s enable minio
 microk8s enable metallb
 microk8s enable dashboard
 
-# Ingress Controller
-# kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
-
-
-# Deploy Portainer
-echo "Adding Portainer"
-cat <<EOF > ./portainer_sc.yml
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: portainer-sc
-parameters:
-  pvDir: /srv/k8s-storage/portainer
-provisioner: microk8s.io/hostpath
-volumeBindingMode: WaitForFirstConsumer
-allowVolumeExpansion: true
-reclaimPolicy: Delete
-EOF
-microk8s kubectl apply -f ./portainer_sc.yml
-
-microk8s helm repo add portainer https://portainer.github.io/k8s/
-microk8s helm repo update
-
-microk8s helm upgrade --install --create-namespace -n portainer portainer portainer/portainer \
-  --set service.type=LoadBalancer \
-  --set tls.force=false \
-  --set image.tag=lts \
-  # --set service.httpNodePort=9902 \
-  --set service.edgePort=8001 \
-  --set persistence.storageClass=portainer-sc
-
-# echo "Waiting for Services to be ready..."
-# NOTE: Not Working!
-# microk8s kubectl wait --for=condition=available service/portainer
-# microk8s kubectl wait --for=condition=available service/kubernetes-dashboard
-# microk8s kubectl wait --for=condition=available service/operator
+microk8s dashboard-proxy
+echo "VPC Access to dashboard: $HOST_PUBLIC_IP:10443"
 
 # Get Dashboard Token
 token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
 microk8s kubectl -n kube-system describe secret $token
 
-# echo "Port Forwarding Services..."
-# NOTE: Not Working!
-# microk8s kubectl port-forward -n portainer service/portainer 9443:9443
-# microk8s kubectl port-forward -n kube-system service/kubernetes-dashboard 10443:443
-# microk8s kubectl port-forward -n minio-operator service/microk8s-console 11443:443
-# microk8s kubectl port-forward -n minio-operator service/console 12443:443
+# Ingress Controller
+# kubectl apply -f https://projectcontour.io/quickstart/contour.yaml
 
 microk8s kubectl get all --all-namespaces
