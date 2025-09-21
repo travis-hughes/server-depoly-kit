@@ -37,7 +37,7 @@ for name in names:
   index = index + 1
 print("")
 print("========================================================")
-input = input("Options(0" + index + ")")
+input = input("Option (0" + index + "): ")
 print("========================================================")
 
 print(keys[input])
