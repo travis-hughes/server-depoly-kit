@@ -50,5 +50,5 @@ tmux start-server
 if sudo -u "$INSTALL_USER" tmux has-session -t deploy_session 2>/dev/null; then
   sudo -u "$INSTALL_USER" tmux attach -t deploy_session
 else
-  sudo -u "$INSTALL_USER" tmux new-session -s deploy_session "sudo sh $TEMP_DATA_PATH/session.sh"
+  sudo -u "$INSTALL_USER" tmux new-session -s deploy_session "sudo sh /srv/deploy_tmp/session.sh"
 fi
