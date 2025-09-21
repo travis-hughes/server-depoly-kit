@@ -80,17 +80,17 @@ input_yn()
   while true; do
     read -p "$L_QUESTION " yn
     case $yn in
-      [Yy]* ) OUTPUT=1; break;;
-      [Nn]* ) OUTPUT=2; break ;;
+      [Yy]* ) L_OUTPUT=1; break;;
+      [Nn]* ) L_OUTPUT=2; break ;;
       * ) echo "Please answer yes or no.";;
     esac
   done
 
-  echo "$OUTPUT"
+  echo "$L_OUTPUT"
 }
 
 select_field()
 {
-  OUTPUT=$(py ./select-field.py) 
-  echo "$OUTPUT"
+  L_OUTPUT=$(py ./select-field.py) 
+  echo "$L_OUTPUT"
 }
