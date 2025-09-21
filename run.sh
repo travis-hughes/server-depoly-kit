@@ -13,8 +13,11 @@ fi
 # Create Tempory Folder
 mkdir -p "$TEMP_DATA_PATH"
 
+# Download dependancies
+wget -nd -np -P "$TEMP_DATA_PATH" --recursive "$FILE_URL"
+
 # Get tmux session script
-wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/session.sh"
+# wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/session.sh"
 
 echo "Starting Tmux Server"
 tmux start-server
