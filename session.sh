@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EXACUTION_DIR=$(dirname $0)
+ROOT_USER_DIR=/root
 TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
 
@@ -9,9 +9,6 @@ if [ -e "deploy.env" ]; then
   echo "Environment Variables have been detected, loading them..."
   . ./deploy.env
 fi
-
-# Create Tempory Folder
-mkdir -p "$TEMP_DATA_PATH"
 
 
 # Download dependancies
@@ -31,8 +28,7 @@ done
 
 
 # Cleanup and reboot
-rm "$EXACUTION_DIR/run.sh"
-rm "$EXACUTION_DIR/session.sh"
+rm "$ROOT_USER_DIR/run.sh"
 rm -r "$TEMP_DATA_PATH"
 rm deploy.env
 reboot

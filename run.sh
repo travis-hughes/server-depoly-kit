@@ -1,6 +1,6 @@
 #!/bin/bash
 
-EXACUTION_DIR=$(dirname $0)
+TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
 
 
@@ -10,8 +10,11 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+# Create Tempory Folder
+mkdir -p "$TEMP_DATA_PATH"
+
 # Get tmux session script
-wget -q -P "$EXACUTION_DIR" "$FILE_URL/session.sh"
+wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/session.sh"
 
 echo "Starting Tmux Server"
 tmux start-server
@@ -37,9 +40,7 @@ if [ -z "$TMUX" ]; then
   if tmux has-session -t deploy_session 2>/dev/null; then
     tmux attach -t deploy_session
   else
-    tmux new-session -s deploy_session "sudo sh $EXACUTION_DIR/session.sh"
+    tmux new-session -s deploy_session "sudo sh /srv/deploy_tmp/session.sh"
   fi
 fi
-
-logout
 EOF
