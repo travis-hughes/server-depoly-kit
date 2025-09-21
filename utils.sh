@@ -91,6 +91,6 @@ input_yn()
 
 select_field()
 {
-  L_OUTPUT=$(python ./select-field.py) 
+  L_OUTPUT=$(python3 ./select-field.py) 
   echo "$L_OUTPUT"
 }
