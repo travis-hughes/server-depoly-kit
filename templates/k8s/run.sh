@@ -6,7 +6,6 @@ microk8s status --wait-ready
 
 # Add default user to microk8s group
 # We do this so we don't need to run all microk8s commands as sudo
-usermod -a -G microk8s "$USERNAME"
 usermod -a -G microk8s "$USERNAME-admin"
 
 
