@@ -12,6 +12,7 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+# Banner
 echo "${Green}"
 echo "
     __                           __    _                
@@ -23,6 +24,7 @@ echo "
 
 "
 echo "${NC}"
+
 
 # Create Tempory Folder
 mkdir -p "$TEMP_DATA_PATH"
