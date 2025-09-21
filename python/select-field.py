@@ -1,4 +1,4 @@
-import sys
+import sys, subprocess
 
 # Format Should be: "key:name"
 
@@ -10,7 +10,7 @@ options = []
 keys = []
 names = []
 
-# Parse args
+# Parse arg options
 for arg in args:
   # If arg does not contain ":", skip adding.
   if ":" not in arg: 
@@ -26,18 +26,17 @@ for option in options:
 for option in options:
   names.append(option.split(":")[1])
 
-
-print("========================================================")
-print("")
-print(description)
-print("")
+subprocess.Popen("========================================================", shell=True)
+subprocess.Popen("", shell=True)
+subprocess.Popen(description, shell=True)
+subprocess.Popen("", shell=True)
 index = 0
 for name in names:
-  print(str(index) + ") " + name)
+  subprocess.Popen(str(index) + ") " + name, shell=True)
   index = index + 1
-print("")
-print("========================================================")
+subprocess.Popen("", shell=True)
+subprocess.Popen("========================================================", shell=True)
 input = input("Option (0" + str(index) + "): ")
-print("========================================================")
+subprocess.Popen("========================================================", shell=True)
 
 print(keys[input])
