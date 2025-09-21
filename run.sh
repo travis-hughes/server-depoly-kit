@@ -31,8 +31,6 @@ else
 fi
 
 
-# Run tmux session under install user
-su - "$INSTALL_USER" <<'EOF'
 # Run tmux session if not already running
 if [ -z "$TMUX" ]; then
   echo -e "\n Launching inside tmux session: deploy_session \n"
@@ -40,7 +38,6 @@ if [ -z "$TMUX" ]; then
   if tmux has-session -t deploy_session 2>/dev/null; then
     tmux attach -t deploy_session
   else
-    tmux new-session -s deploy_session "sudo sh /path/to/session.sh"
+    tmux new-session -d "$INSTALL_USER" -s deploy_session "sudo sh /path/to/session.sh"
   fi
 fi
-EOF
