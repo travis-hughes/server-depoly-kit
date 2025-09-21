@@ -20,7 +20,9 @@ tmux start-server
 # Create install user
 INSTALL_USER="server-deploy-kit"
 if id "$INSTALL_USER" >/dev/null 2>&1; then
-  echo "Create a password for the server-deploy-kit user"
+  echo "$INSTALL_USER found"
+else
+  echo "Create a password for the $INSTALL_USER user"
   echo "\n You can consider this your systems main user (outside of root of course). We will preform installs\n using this user. \n"
   sudo adduser --gecos "" --ingroup sudo "$INSTALL_USER"
 fi
