@@ -89,8 +89,8 @@ input_yn()
   echo "$L_OUTPUT"
 }
 
-# select_field()
-# {
-#   L_OUTPUT=$(py ./select-field.py) 
-#   echo "$L_OUTPUT"
-# }
+select_field()
+{
+  L_OUTPUT=$(py ./select-field.py) 
+  echo "$L_OUTPUT"
+}
