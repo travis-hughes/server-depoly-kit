@@ -14,8 +14,9 @@ FILE_URL=https://k8s-deploy.ap-host.net
 
 
 # Download dependancies
-wget -q --recursive -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
-wget -q --recursive -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
+wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
+wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
+# wget -q -x -nH --cut-dirs=0 -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL" -P "$TEMP_DATA_PATH"
 
 
 # Include util script
@@ -23,7 +24,7 @@ wget -q --recursive -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FIL
 
 
 # Load scripts from autorun.
-for FILE in "$TEMP_DATA_PATH"/autorun/*.sh; do
+for FILE in "$TEMP_DATA_PATH"/*.sh; do
   echo "\n ▶️ Exacuting autorun script: $FILE \n"
   . "$FILE"
 done
