@@ -2,7 +2,7 @@
 
 TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
-RED='\033[0;31m'
+
 NC='\033[0m'       # No Color
 Green='\033[0;32m' # Green
 
