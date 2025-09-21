@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# The "real" entrypoint
+
 ROOT_USER_DIR=/root
 TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net

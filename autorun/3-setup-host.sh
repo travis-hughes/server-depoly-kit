@@ -28,16 +28,6 @@ echo "Disabling root user access"
 sudo passwd -l root
 sudo rm .ssh/authorized_keys
 
-# If root user then lock access off. Else set a strong password. Remove ssh keys for both.
-# if [ $USER = root ]; then
-#     echo "Disabling root user access"
-#     sudo passwd -l root
-#     sudo rm .ssh/authorized_keys
-# else
-#     echo "Please set a strong password for the current account."
-#     passwd
-#     sudo rm .ssh/authorized_keys
-# fi
 
 echo "\n Disabling SSH password authentication... \n"
 rm -f /etc/ssh/sshd_config.d/*
