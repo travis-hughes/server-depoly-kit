@@ -28,4 +28,4 @@ stty $stty_orig
 #     * ) echo "Invalid input, try again." && exit 1 ;;
 # esac
 
-$TEMPLATE = $(select_field "Select a server template" "k8s:Kubernetes (Experimental)" "docker:Docker")
+$TEMPLATE=$(select_field "Select a server template" "k8s:Kubernetes (Experimental)" "docker:Docker")
