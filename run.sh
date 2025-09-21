@@ -3,8 +3,8 @@
 TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
 
-NC='\033[0m'       # No Color
-Green='\033[0;32m' # Green
+NC="\033[0m"    # No Color
+Green="\033[0;32m" # Green
 
 # Ensure we're running as root
 if [ "$(id -u)" -ne 0 ]; then
@@ -39,7 +39,7 @@ if id "$INSTALL_USER" >/dev/null 2>&1; then
   echo "$INSTALL_USER found, skipping."
 else
   echo "Create a password for the $INSTALL_USER user"
-  echo "\n You can consider this your systems main user (outside of root of course). We will preform installs\n using this user. \n"
+  echo "\n You can consider this your systems main user (outside of root of course). We will preform installs using this user."
   sudo adduser --gecos "" --ingroup sudo "$INSTALL_USER"
 fi
 
