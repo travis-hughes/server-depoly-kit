@@ -2,7 +2,9 @@
 
 TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
-
+RED='\033[0;31m'
+NC='\033[0m'       # No Color
+Green='\033[0;32m' # Green
 
 # Ensure we're running as root
 if [ "$(id -u)" -ne 0 ]; then
@@ -10,13 +12,17 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
-echo ""
+echo "${Green}"
 echo "
-        _______ _     _ __   _ _______ _     _ _____ __   _  ______
- |      |_____| |     | | \  | |       |_____|   |   | \  | |  ____
- |_____ |     | |_____| |  \_| |_____  |     | __|__ |  \_| |_____|
+    __                           __    _                
+   / /   ____ ___  ______  _____/ /_  (_)___  ____ _    
+  / /   / __ `/ / / / __ \/ ___/ __ \/ / __ \/ __ `/    
+ / /___/ /_/ / /_/ / / / / /__/ / / / / / / / /_/ / _ _ 
+/_____/\__,_/\__,_/_/ /_/\___/_/ /_/_/_/ /_/\__, (_|_|_)
+                                           /____/       
+
 "
-echo ""
+echo "${NC}"
 
 # Create Tempory Folder
 mkdir -p "$TEMP_DATA_PATH"
