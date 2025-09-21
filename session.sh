@@ -5,17 +5,17 @@ TEMP_DATA_PATH=/srv/deploy_tmp
 FILE_URL=https://k8s-deploy.ap-host.net
 
 # If deploy.env exists, load it.
-if [ -e "deploy.env" ]; then
-  echo "Environment Variables have been detected, loading them..."
-  . ./deploy.env
-fi
+# if [ -e "deploy.env" ]; then
+#   echo "Environment Variables have been detected, loading them..."
+#   . ./deploy.env
+# fi
 
 
 # Download dependancies
-wget  -nd -np -P "$TEMP_DATA_PATH" --recursive "$FILE_URL"
+wget -nd -np -P "$TEMP_DATA_PATH" --recursive "$FILE_URL"
 
-# wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
-# wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
+wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
+wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
 
 
 # Include util script

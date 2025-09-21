@@ -35,8 +35,8 @@ fi
 if [ -z "$TMUX" ]; then
   echo -e "\n Launching inside tmux session: deploy_session \n"
 
-  if tmux has-session -t deploy_session 2>/dev/null; then
-    tmux attach -t deploy_session
+  if tmux has-session -s deploy_session 2>/dev/null; then
+    tmux attach -s deploy_session
   else
     sudo -u "$INSTALL_USER" tmux new-session -s deploy_session "sudo sh $TEMP_DATA_PATH/session.sh"
   fi
