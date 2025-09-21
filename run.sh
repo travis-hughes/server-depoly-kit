@@ -39,7 +39,5 @@ if [ -z "$TMUX" ]; then
     tmux attach -t deploy_session
   else
     sudo -u "$INSTALL_USER" tmux new-session -s deploy_session "sudo sh $TEMP_DATA_PATH/session.sh"
-
-    # tmux new-session -s deploy_session "sudo sh $TEMP_DATA_PATH/session.sh"
   fi
 fi
