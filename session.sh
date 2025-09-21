@@ -14,8 +14,8 @@ FILE_URL=https://k8s-deploy.ap-host.net
 
 
 # Download dependancies
-# wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
-# wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
+wget -q --recursive -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
+wget -q --recursive -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
 
 
 # Include util script
