@@ -33,7 +33,7 @@ print(description)
 print("")
 index = 0
 for name in names:
-  print(index + ") " + name)
+  print(str(index) + ") " + name)
   index = index + 1
 print("")
 print("========================================================")
