@@ -26,17 +26,21 @@ for option in options:
 for option in options:
   names.append(option.split(":")[1])
 
-subprocess.Popen("========================================================", shell=True)
-subprocess.Popen("", shell=True)
-subprocess.Popen(description, shell=True)
-subprocess.Popen("", shell=True)
+def echo(text):
+  subprocess.run("echo " + text, shell=True)
+
+# TODO: Echo here instead
+echo("========================================================")
+echo("")
+echo(description)
+echo("")
 index = 0
 for name in names:
-  subprocess.Popen(str(index) + ") " + name, shell=True)
+  echo(str(index) + ") " + name)
   index = index + 1
-subprocess.Popen("", shell=True)
-subprocess.Popen("========================================================", shell=True)
+echo("")
+echo("========================================================")
 input = input("Option (0" + str(index) + "): ")
-subprocess.Popen("========================================================", shell=True)
+echo("========================================================")
 
 print(keys[input])
