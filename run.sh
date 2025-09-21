@@ -10,19 +10,24 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+# Get tmux session script
 wget -q -P "$EXACUTION_DIR" "$FILE_URL/session.sh"
 
 echo "Starting Tmux Server"
 tmux start-server
 
 
-DEPLOY_USER="server-deploy-kit"
-echo "Create a password for the server-deploy-kit user"
-echo "\n You can consider this your systems main user (outside of root of course). We will preform installs\n using this user. \n"
-sudo adduser --gecos "" --ingroup sudo "$DEPLOY_USER"
+# Create install user
+INSTALL_USER="server-deploy-kit"
+if id "$INSTALL_USER" >/dev/null 2>&1; then
+  echo "Create a password for the server-deploy-kit user"
+  echo "\n You can consider this your systems main user (outside of root of course). We will preform installs\n using this user. \n"
+  sudo adduser --gecos "" --ingroup sudo "$INSTALL_USER"
+fi
 
 
-cat <<EOF | su - "$DEPLOY_USER" -c
+# Run tmux session under install user
+cat <<EOF | su - "$INSTALL_USER" -c
 # Run tmux session if not already running
 if [ -z "$TMUX" ]; then
   echo "\n Launching inside tmux session: deploy_session \n"
