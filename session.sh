@@ -24,7 +24,7 @@ wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
 
 
 # Load scripts from autorun.
-for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
+for FILE in "$TEMP_DATA_PATH"/0?-*.sh; do
   echo "\n ▶️ Exacuting autorun script: $FILE \n"
   . "$FILE"
 done
