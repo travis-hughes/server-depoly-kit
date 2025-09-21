@@ -15,12 +15,14 @@ wget -q -P "$EXACUTION_DIR" "$FILE_URL/session.sh"
 echo "Starting Tmux Server"
 tmux start-server
 
+
 DEPLOY_USER="server-deploy-kit"
 echo "Create a password for the server-deploy-kit user"
 echo "\n You can consider this your systems main user (outside of root of course). We will preform installs\n using this user. \n"
 sudo adduser --gecos "" --ingroup sudo "$DEPLOY_USER"
-su - "$DEPLOY_USER" -c "
 
+
+cat <<EOF | su - "$DEPLOY_USER" -c
 # Run tmux session if not already running
 if [ -z "$TMUX" ]; then
   echo "\n Launching inside tmux session: deploy_session \n"
@@ -33,4 +35,4 @@ if [ -z "$TMUX" ]; then
 fi
 
 logout
-"
+EOF

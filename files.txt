@@ -4,3 +4,4 @@ autorun/2-select-template.sh
 autorun/3-setup-host.sh
 autorun/4-install-template.sh
 python/download-files.py
+utils.sh

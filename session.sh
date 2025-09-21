@@ -14,15 +14,21 @@ fi
 mkdir -p "$TEMP_DATA_PATH"
 
 
-# Download dependancy files
+# Download dependancies
 wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/files.txt"
 wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
+
+
+# Include util script
+. "$TEMP_DATA_PATH/utils.sh"
+
 
 # Load scripts from autorun.
 for FILE in "$TEMP_DATA_PATH"/*-*.sh; do
   echo "\n ▶️ Exacuting autorun script: $FILE \n"
   . "$FILE"
 done
+
 
 # Cleanup and reboot
 rm "$EXACUTION_DIR/run.sh"
