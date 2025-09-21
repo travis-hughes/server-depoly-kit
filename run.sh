@@ -15,7 +15,7 @@ wget -q -P "$EXACUTION_DIR" "$FILE_URL/session.sh"
 echo "Starting Tmux Server"
 tmux start-server
 
-# DEPLOY_USER="server-deploy-kit"
+DEPLOY_USER="server-deploy-kit"
 echo "Create a password for the server-deploy-kit user"
 echo "\n You can consider this your systems main user (outside of root of course). We will preform installs\n using this user. \n"
 sudo adduser --gecos "" --ingroup sudo "$DEPLOY_USER"
