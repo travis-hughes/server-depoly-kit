@@ -1,0 +1,1 @@
+echo "$TEMP_DATA_PATH/motd.txt"
