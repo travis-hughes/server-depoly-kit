@@ -88,9 +88,3 @@ input_yn()
 
   echo "$L_OUTPUT"
 }
-
-select_field()
-{
-  L_OUTPUT=$(python3 "$TEMP_DATA_PATH"/select-field.py "$@") 
-  echo "$L_OUTPUT"
-}

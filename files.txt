@@ -4,4 +4,3 @@ autorun/2-select-template.sh
 autorun/3-setup-host.sh
 autorun/4-install-template.sh
 utils.sh
-python/select-field.py
