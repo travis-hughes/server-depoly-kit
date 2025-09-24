@@ -1,1 +1,1 @@
-echo "$TEMP_DATA_PATH/motd.txt"
+cat "$TEMP_DATA_PATH/motd.txt"

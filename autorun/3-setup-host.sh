@@ -39,15 +39,11 @@ echo "Setting system hostname and timezone..."
 hostnamectl set-hostname "$HOSTNAME"
 timedatectl set-timezone Europe/London
 
+
 # Install and configure Tailscale
 echo "Installing Tailscale..."
 curl -fsSL https://tailscale.com/install.sh | bash
 tailscale up --accept-risk=all
-
-
-echo "Cron Jobs"
-# Add cron job to reboot at 6:00 AM
-(crontab -l 2>/dev/null; echo "0 6 * * * /sbin/reboot") | crontab -
 
 
 # Update packages and install required software
@@ -55,11 +51,18 @@ echo "Updating system and installing necessary packages..."
 apt update && apt upgrade -y
 apt install -y fail2ban ufw
 
+
 # Setup UFW
 echo "Enabling UFW firewall..."
 ufw allow OpenSSH
 ufw --force enable
 
+
 # Enable and start services
 echo "Enabling services..."
 systemctl enable fail2ban --now
+
+
+echo "Cron Jobs"
+# Add cron job to reboot at 6:00 AM
+(crontab -l 2>/dev/null; echo "0 6 * * * /sbin/reboot") | crontab -
