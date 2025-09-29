@@ -19,14 +19,16 @@ echo "\n========================================================================
 echo "Select a server template: \n"
 echo "1) Kubernetes (Experimental)"
 echo "2) Docker"
-echo "3) Coolify"
+echo "3) Swarm"
+echo "4) Coolify"
 echo "\n========================================================================================\n"
 
 read -p "Option (1/2): " option
 case "$option" in
     1 ) TEMPLATE="k8s" ;;
     2 ) TEMPLATE="docker" ;;
-    3 ) TEMPLATE="coolify" ;;
+    3 ) TEMPLATE="swarm" ;;
+    4 ) TEMPLATE="coolify" ;;
     * ) echo "Invalid input, try again." && exit 1 ;;
 esac
 
