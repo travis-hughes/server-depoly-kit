@@ -4,7 +4,7 @@
 
 ROOT_USER_DIR=/root
 TEMP_DATA_PATH=/srv/deploy_tmp
-FILE_URL=https://k8s-deploy.ap-host.net
+FILE_URL=https://server-depoly-kit.github.io
 
 # If deploy.env exists, load it.
 # if [ -e "deploy.env" ]; then
