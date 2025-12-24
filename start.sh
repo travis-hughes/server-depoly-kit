@@ -6,9 +6,10 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+echo "Launching..."
 
 # TODO: Check if code exists, download code package and extract it.
-echo "Checking For Software"
+echo "Checking files"
 if [ ! -d "$TEMP_DATA_PATH" ]; then
   mkdir "$TEMP_DATA_PATH"
   wget -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/package.tar.gz" -B "$FILE_URL"
