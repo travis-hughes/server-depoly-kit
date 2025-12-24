@@ -19,6 +19,14 @@ wget -q -P "$TEMP_DATA_PATH" -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL"
 # wget -q -x -nH --cut-dirs=0 -i "$TEMP_DATA_PATH/files.txt" -B "$FILE_URL" -P "$TEMP_DATA_PATH"
 
 
+while IFS= read -r line || [ -n "$line" ]; do
+  if [ ! -f "$FILE" ]; then
+    # wget -q -P "$TEMP_DATA_PATH" "$FILE_URL/$line"
+    wget -q -O "$TEMP_DATA_PATH" "$FILE_URL/$line"
+  fi
+done < $TEMP_DATA_PATH/files.txt
+
+
 # Include util script
 . "$TEMP_DATA_PATH/utils.sh"
 
