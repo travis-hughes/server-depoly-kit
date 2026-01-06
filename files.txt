@@ -2,6 +2,7 @@ autorun/0-motd.sh
 autorun/1-start.sh
 autorun/2-select-template.sh
 autorun/3-setup-host.sh
+autorun/3.2-addons.sh
 autorun/4-install-template.sh
 utils.sh
 motd.txt

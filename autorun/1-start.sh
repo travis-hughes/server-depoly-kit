@@ -20,6 +20,7 @@ echo "Select a server template: \n"
 echo "1) Docker"
 echo "2) Swarm"
 echo "3) Coolify"
+echo "4) Microcloud"
 echo "\n========================================================================================\n"
 
 read -p "Option (1/2): " option
@@ -27,6 +28,7 @@ case "$option" in
     1 ) TEMPLATE="docker" ;;
     2 ) TEMPLATE="swarm" ;;
     3 ) TEMPLATE="coolify" ;;
+    4 ) TEMPLATE="microcloud" ;;
     * ) echo "Invalid input, try again." && exit 1 ;;
 esac
 
