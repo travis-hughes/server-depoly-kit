@@ -17,18 +17,16 @@ stty $stty_orig
 
 echo "\n========================================================================================\n"
 echo "Select a server template: \n"
-echo "1) Kubernetes (Experimental)"
-echo "2) Docker"
-echo "3) Swarm"
-echo "4) Coolify"
+echo "1) Docker"
+echo "2) Swarm"
+echo "3) Coolify"
 echo "\n========================================================================================\n"
 
 read -p "Option (1/2): " option
 case "$option" in
-    1 ) TEMPLATE="k8s" ;;
-    2 ) TEMPLATE="docker" ;;
-    3 ) TEMPLATE="swarm" ;;
-    4 ) TEMPLATE="coolify" ;;
+    1 ) TEMPLATE="docker" ;;
+    2 ) TEMPLATE="swarm" ;;
+    3 ) TEMPLATE="coolify" ;;
     * ) echo "Invalid input, try again." && exit 1 ;;
 esac
 
