@@ -15,11 +15,12 @@ case "$OPTION" in
     * ) echo "Invalid input, try again." && exit 1 ;;
 esac
 
-if [ "$TEMPLATE" == "init" ]; then
+# == might break use -eq instead if not
+if [ "$TEMPLATE" -eq "init" ]; then
     microcloud init
 fi
 
-if [ "$TEMPLATE" == "join" ]; then
+if [ "$TEMPLATE" -eq "join" ]; then
     IP_ADDRESS=$( ensure_var_defined "IP Address" $IP_ADDRESS )
     microcloud join $IP_ADDRESS
 fi
