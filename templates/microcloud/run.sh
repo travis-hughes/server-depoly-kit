@@ -1,5 +1,4 @@
 snap install microcloud lxd microceph microovn --cohort="+"
-sudo microcloud init
 
 
 echo "\n========================================================================================"
@@ -15,7 +14,7 @@ case "$OPTION" in
     * ) echo "Invalid input, try again." && exit 1 ;;
 esac
 
-# == might break use -eq instead if not
+
 if [ "$TEMPLATE" -eq "init" ]; then
     microcloud init
 fi
