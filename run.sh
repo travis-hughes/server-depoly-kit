@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TEMP_DATA_PATH=/srv/deploy_tmp
-FILE_URL=https://server-depoly-kit.github.io
+FILE_URL=https://depoly-kit.ap-host.net
 
 NC="\033[0m"    # No Color
 Green="\033[0;32m" # Green
