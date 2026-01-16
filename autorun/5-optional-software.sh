@@ -55,7 +55,7 @@ EOF
 
 
 echo "Optional Software"
-OPTIONS=("Tailscale: 1" "Microcloud: 2" "ClamAV 3" "Skip: 4")
+OPTIONS=("Tailscale: 1" "Microcloud: 2" "ClamAV: 3" "Skip: 4")
 for OPTION in "${!OPTIONS[@]}"
     do
         case "$OPTION" in

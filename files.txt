@@ -2,7 +2,7 @@ autorun/0-motd.sh
 autorun/1-start.sh
 autorun/2-select-template.sh
 autorun/3-setup-host.sh
-autorun/5-optional-software.sh
+autorun/3.1-install-malware-detection.sh
 autorun/4-install-template.sh
 autorun/5-optional-software.sh
 utils.sh
