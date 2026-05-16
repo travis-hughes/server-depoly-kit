@@ -1,27 +1,32 @@
 #!/bin/bash
 
 # Create user
-echo "\n Creating new users \n"
-
 add_user()
 {
-    L_USERNAME=$1
-    L_GROUP=$2
+    USERNAME=$1
+    GROUP=$2
 
-    echo "Adding Username: $L_USERNAME"
+    echo "Adding Username: $USERNAME"
 
-    sudo adduser --gecos "" --ingroup "$L_GROUP" "$L_USERNAME"
-    mkdir -p /home/"$L_USERNAME"/.ssh
+    sudo adduser --gecos "" --ingroup "$GROUP" "$USERNAME"
+    mkdir -p /home/"$USERNAME"/.ssh
 
-    sudo chown -R "$L_USERNAME":$L_GROUP /home/"$L_USERNAME"/.ssh
-    sudo chmod 700 /home/"$L_USERNAME"/.ssh
-    sudo chmod 600 /home/"$L_USERNAME"/.ssh/authorized_keys
+    sudo chown -R "$USERNAME":$GROUP /home/"$USERNAME"/.ssh
+    sudo chmod 700 /home/"$USERNAME"/.ssh
+    sudo chmod 600 /home/"$USERNAME"/.ssh/authorized_keys
 }
 
+echo "\n Create Default Admin User \n"
 add_user "$USERNAME-admin" sudo
 
+echo "\n Create Default User \n"
 add_user "$USERNAME" users
 echo "$SSH_KEY" | sudo tee /home/"$USERNAME"/.ssh/authorized_keys > /dev/null
+
+
+
+
+
 
 # Disable root user access.
 echo "Disabling root user access"
@@ -38,12 +43,6 @@ echo "PasswordAuthentication no" > /etc/ssh/sshd_config.d/disable-password-auth.
 echo "Setting system hostname and timezone..."
 hostnamectl set-hostname "$HOSTNAME"
 timedatectl set-timezone Europe/London
-
-
-# Install and configure Tailscale
-echo "Installing Tailscale..."
-curl -fsSL https://tailscale.com/install.sh | bash
-tailscale up --accept-risk=all
 
 
 # Update packages and install required software
