@@ -5,7 +5,11 @@
 
 ---
 
-<strong>URL:</strong>
-```
-https://.ap-host.net/run.sh
-```
+<strong>Requirements:</strong>
+- A web server to run on (you must modify run.sh and session.sh files to work correctly)
+
+
+<strong>Installation:</strong>
+1. Download the repository.
+2. Upload the src folder to a web server of your choice.
+3. curl -s <YOUR SERVER URL HERE> | sh
