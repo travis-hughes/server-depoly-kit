@@ -6,10 +6,11 @@
 ---
 
 <strong>Requirements:</strong>
-- A web server to run on (you must modify run.sh and session.sh files to work correctly)
+- A web server to run on
 
 
 <strong>Installation:</strong>
 1. Download the repository.
-2. Upload the src folder to a web server of your choice.
-3. curl -s <YOUR SERVER URL HERE> | sh
+2. Upload the contents of the src folder to a web server of your choice.
+3. modify run.sh and session.sh to your webserver url
+4. run curl -s <YOUR SERVER URL HERE> | sh
